@@ -374,6 +374,8 @@ function icons(){
    refresh.scale = 0.12
    refresh.addImage("refreshImg", refreshImg)
 
+   retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true
+   halted = false
 
    //retry.debug = true
    //retryFrame.debug = true
@@ -428,11 +430,10 @@ function draw(){
 
    if(count == stratagems[setSelect][orderSelect].length){
       drawing = false
-      halted = false
+      //halted = false
 
       arrowGroup.setVisibleEach(true)
       arrowFrameGroup.setVisibleEach(true)
-      retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true
    }
 
 
