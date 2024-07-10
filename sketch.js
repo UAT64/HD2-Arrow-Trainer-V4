@@ -2,7 +2,7 @@ var position
 var rotation
 var count = 0
 var positionCount = 1
-var rowCount = 1
+var rowCount = 2
 var inputCount = 0
 const stratagems = [
    eagle = [ Eagle500Kg = [1, 2, 3, 3, 3], EagleClusterBomb = [1, 2, 3, 3, 2], EagleAirstrike = [1, 2, 3, 2], EagleStrafingRun = [1, 2, 2], EagleNapalmAirstrike = [1, 2, 3, 1], EagleSmokeStrike = [1, 2, 1, 3], EagleRocketPods = [1, 2, 1, 4], EagleRearm = [1, 1, 4, 1, 2] ],
@@ -39,22 +39,32 @@ var icon_img, iconFrame_img
 var loadIcons = false
 var nameLocations = [0, 8, 19, 28, 34, 49, 60]
 var iconAnimationValue
+var retry, retryImg
+var refresh, refreshImg
+var retryFrame, retryFrameImg
+var refreshFrame, refreshFrameImg
+var halted = false
 
 
 function preload(){
-    arrowEmpty_img = loadAnimation("./assets/arrows/Arrow_empty.png","./assets/arrows/Arrow_filled.png")
+    arrowEmpty_img = loadAnimation("./assets/arrows/Arrow_empty.png","./assets/arrows/Arrow_filled.png", "./assets/arrows/Arrow_incorrect.png")
     arrowFrame_img = loadAnimation("./assets/arrows/Arrow_cover_eagle.png","./assets/arrows/Arrow_cover_orbital.png","./assets/arrows/Arrow_cover_support.png","./assets/arrows/Arrow_cover_backpack.png","./assets/arrows/Arrow_cover_weapon.png","./assets/arrows/Arrow_cover_sentry.png","./assets/arrows/Arrow_cover_vehicle.png")
     point_img = loadImage("./assets/point.png")
     iconFrame_img = loadImage("./assets/iconFrame.png")
     icon_img = loadAnimation(
       "./assets/eagle/Eagle_500KG_Bomb_Icon.webp", "./assets/eagle/Eagle_Cluster_Bomb_Icon.webp", "./assets/eagle/Eagle_Airstrike_Icon.webp", "./assets/eagle/Eagle_Strafing_Run_Icon.webp", "./assets/eagle/Eagle_Napalm_Airstrike_Icon.webp", "./assets/eagle/Eagle_Smoke_Strike_Icon.webp", "./assets/eagle/Eagle_110MM_Rocket_Pods_Icon.webp", "./assets/eagle/HD2_Eagle_Rearm.webp",
       "./assets/orbital/Orbital_Precision_Strike_Icon.webp", "./assets/orbital/Orbital_Airburst_Strike_Icon.webp", "./assets/orbital/Orbital_120MM_HE_Barrage_Icon.webp", "./assets/orbital/Orbital_380MM_HE_Barrage_Icon.webp", "./assets/orbital/Orbital_Walking_Barrage_Icon.webp", "./assets/orbital/Orbital_Laser_Icon.webp", "./assets/orbital/Orbital_Railcannon_Strike_Icon.webp", "./assets/orbital/Orbital_Gas_Strike_Icon.webp", "./assets/orbital/Orbital_Smoke_Strike_Icon.webp", "./assets/orbital/Orbital_Gatling_Barrage_Icon.webp", "./assets/orbital/Orbital_EMS_Strike_Icon.webp", 
-      "./assets/support/HD2_Reinforce.webp", "./assets/support/SOS.webp", "./assets/support/HD2_Resupply.webp", "./assets/iconUnknown.png", "./assets/iconUnknown.png", "./assets/iconUnknown.png", "./assets/iconUnknown.png", "./assets/iconUnknown.png", "./assets/iconUnknown.png", 
+      "./assets/support/HD2_Reinforce.webp", "./assets/support/SOS.webp", "./assets/support/HD2_Resupply.webp", "./assets/support/HD2_SEAF_Artillery.png", "./assets/support/Strat_NUX-223_Hellbomb_mk1.png", "./assets/support/DeliverSSSDicon.png", "./assets/support/DeliverSSSDicon.png", "./assets/support/Seismic_probe_icon.png", "./assets/support/HD2_Super_Earth_Flag.png", 
       "./assets/backpack/AX_LAS-5_Guard_Dog_Rover_Icon.webp", "./assets/backpack/AX_AR-23_Guard_Dog_Icon.webp", "./assets/backpack/LIFT-850_Jump_Pack_Icon.webp", "./assets/backpack/SH-32_Shield_Generator_Pack_Icon.webp", "./assets/backpack/B-1_Supply_Pack_Icon.webp","./assets/backpack/SH-20_Ballistic_Shield_Backpack_Icon.webp", 
       "./assets/weapon/MG-43_Machine_Gun_Icon.webp", "./assets/weapon/APW-1_Anti-Materiel_Rifle_Icon.webp", "./assets/weapon/M-105_Stalwart_Icon.webp", "./assets/weapon/EAT-17_Expendable_Anti-Tank_Icon.webp", "./assets/weapon/GR-8_Recoilless_Rifle_Icon.webp", "./assets/weapon/FLAM-40_Flamethrower_Icon.webp", "./assets/weapon/AC-8_Autocannon_Icon.webp", "./assets/weapon/MG-206_Heavy_Machine_Gun_Icon.webp", "./assets/weapon/RS-422_Railgun_Icon.webp", "./assets/weapon/FAF-14_Spear_Icon.webp", "./assets/weapon/GL-21_Grenade_Launcher_Icon.webp", "./assets/weapon/LAS-98_Laser_Cannon_Icon.webp", "./assets/weapon/ARC-3_Arc_Thrower_Icon.webp", "./assets/weapon/LAS-99_Quasar_Cannon_Icon.webp", "./assets/weapon/RL-77_Airburst_Rocket_Launcher_Icon.webp", 
       "./assets/sentry/E_MG-101_HMG_Emplacement_Icon.webp", "./assets/sentry/FX-12_Shield_Generator_Relay_Icon.webp", "./assets/sentry/A_ARC-3_Tesla_Tower_Icon.webp", "./assets/sentry/MD-6_Anti-Personnel_Minefield_Icon.webp", "./assets/sentry/MD-I4_Incendiary_Mines_Icon.webp", "./assets/sentry/A_MG-43_Machine_Gun_Sentry_Icon.webp", "./assets/sentry/A_G-16_Gatling_Sentry_Icon.webp", "./assets/sentry/A_M-12_Mortar_Sentry_Icon.webp", "./assets/sentry/A_AC-8_Autocannon_Sentry_Icon.webp", "./assets/sentry/A_MLS-4X_Rocket_Sentry_Icon.webp", "./assets/sentry/A-M-23_EMS_Mortar_Sentry_Icon.webp", 
       "./assets/vehicle/EXO-45_Patriot_Exosuit_Icon.webp", "./assets/vehicle/EXO-49_Emancipator_Exosuit_Icon.webp"
     )
+    retryImg = loadImage("./assets/retry.png")
+    refreshImg = loadImage("./assets/refresh.png")
+    retryFrameImg = loadAnimation("./assets/retryFrameEmpty.png", "./assets/retryFrameHighlighted.png")
+    refreshFrameImg = loadAnimation("./assets/retryFrameEmpty.png", "./assets/retryFrameHighlighted.png")
+
     /*
     eagle = 0 to 8
     orbital = 9 to 19
@@ -77,7 +87,7 @@ function setup(){
     arrowGroup=new Group()
     arrowFrameGroup=new Group()
     comboSelect()
-    drawPoint()
+    //drawPoint()
 }
 
 function updateCanvas(){
@@ -102,6 +112,7 @@ function comboSelect(){
     }
     drawing = true
 }
+
 
 function drawPoint(){
    point = createSprite(pointX, pointY)
@@ -179,8 +190,11 @@ function arrows(){
       console.log("Before move for arrow:" , count)
       console.log("Arrow.x = ",arrow.x)
       console.log("Arrow.y = ",arrow.y)
+
+      console.log("Before move for arrowFrame:" , count)
       console.log("ArrowFrame.x = ",arrowFrame.x)
       console.log("ArrowFrame.y = ",arrowFrame.y)
+
       
       window.width = window.innerWidth
       window.height = window.innerHeight
@@ -205,6 +219,8 @@ function arrows(){
       console.log("After move for arrow:" , count)
       console.log("Arrow.x = ",arrow.x)
       console.log("Arrow.y = ",arrow.y)
+
+      console.log("After move for arrowFrame:" , count)
       console.log("ArrowFrame.x = ",arrowFrame.x)
       console.log("ArrowFrame.y = ",arrowFrame.y)
       
@@ -246,7 +262,10 @@ function arrowCheck(){
 
    } else if(input != stratagems[setSelect][orderSelect][inputCount]){
       console.log("Incorrect inputs");
-      reset();
+      arrowGroup.get(inputCount).setFrame(2)
+      halted = true
+      retryFrame.setFrame(1)
+      //reset();
       inputs.length = 0
    }
 
@@ -264,18 +283,21 @@ function reset() {
    console.log(window.width, window.height) 
    background(rgb(69, 69, 69))
    count = 0
-   rowCount = 1
+   rowCount = 2
    positionCount = 1
    inputCount = 0
    drawing = true
    correctValue = 0
    //reloadedBefore = true
-   point.destroy()
+   //point.destroy()
    icon.destroy()
    iconFrame.destroy()
-   drawPoint()
+   retry.destroy()
+   refresh.destroy()
+   retry.destroy()
+   retryFrame.destroy()
+   //drawPoint()
    
-
    inputs = []
    console.log("inputs: ", inputs)
 }
@@ -286,41 +308,76 @@ function softReset() {
    arrowGroup.clear(), arrowFrameGroup.clear()
    arrowGroup.remove(arrow), arrowFrameGroup.remove(arrowFrame)
    count = 0
-   rowCount = 1
+   rowCount = 2
    positionCount = 1
    drawing = true
    //reloadedBefore = true
-   point.destroy()
+   //point.destroy()
    icon.destroy()
    iconFrame.destroy()
-   drawPoint()
-   
+   retry.destroy()
+   refresh.destroy()
+   retry.destroy()
+   retryFrame.destroy()
+   //drawPoint()
 }
 
 function icons(){
    rowCount += 1
    positionCount = 1
-   icon = createSprite(positionCount * 100, rowCount * 100)
-   iconFrame = createSprite(positionCount * 100, rowCount * 100)
-   iconFrame.addImage("iconFrameImg", iconFrame_img)
-   icon.addAnimation("iconAnim", icon_img)
-   icon.pause()
-   icon.depth = 980
-   
-   iconAnimationValue = nameLocations[setSelect] + orderSelect
-   icon.setFrame(iconAnimationValue)
-
    rectMode(CENTER)
-   icon.scale = 1.8
-   iconFrame.scale = 1.8
 
    push()
    fill(255);
    textSize(30)
    text(stratagemNames[setSelect][orderSelect], (positionCount + 1) * 85, rowCount * 105 )
    pop();
+
+   iconFrame = createSprite(positionCount * 100, rowCount * 100)
+   iconFrame.addImage("iconFrameImg", iconFrame_img)
+   //iconFrame.debug = true
+   iconFrame.visible = false
+   iconFrame.scale = 1.8
+
+   retryFrame = createSprite(100, 100)
+   retryFrame.pause()
+   retryFrame.visible = false
+   retryFrame.scale = 0.12
+   retryFrame.addAnimation("retryFrameImg", retryFrameImg)
+   retryFrame.pause()
+
+   refreshFrame = createSprite(200, 100)
+   refreshFrame.visible = false
+   refreshFrame.scale = 0.12
+   refreshFrame.addAnimation("refreshFrameImg", refreshFrameImg)
+   refreshFrame.pause()
+
+   icon = createSprite(positionCount * 100, rowCount * 100)
+   icon.addAnimation("iconAnim", icon_img)
+   icon.pause()
+   icon.visible = false
+   icon.scale = 1.8
+   //icon.debug = true
    
-   
+   iconAnimationValue = nameLocations[setSelect] + orderSelect
+   icon.setFrame(iconAnimationValue)
+
+   retry = createSprite(100, 100)
+   retry.visible = false
+   retry.scale = 0.12
+   retry.addImage("retryImg", retryImg)
+
+   refresh = createSprite(200, 100)
+   refresh.visible = false
+   refresh.scale = 0.12
+   refresh.addImage("refreshImg", refreshImg)
+
+   retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true
+
+   //retry.debug = true
+   //retryFrame.debug = true
+   //refresh.debug = true
+   //refreshFrame.debug = true
 }
 
 function draw(){
@@ -344,8 +401,8 @@ function draw(){
        "mouse x is: ", World.mouseX,
        "mouse y is: ", World.mouseY
        */
-       //"rowcount is: ", rowCount,
-       //"positioncount is: ", positionCount,
+       "rowcount is: ", rowCount,
+       "positioncount is: ", positionCount,
        "count is: ", count,
        "strategem name is: ", stratagemNames[setSelect][orderSelect],
        "iconAnimationValue is: ", iconAnimationValue
@@ -379,25 +436,38 @@ function draw(){
 
    //console.log("drawing is: ", drawing)
 
-   if(keyWentDown(87) || keyWentDown(38)){
+   if(keyWentDown(82) || mousePressedOver(retry)){
+      console.log("retrying")
+      reset()
+      halted = false
+   }
+
+   if(keyWentDown(78) || mousePressedOver(refresh)){
+      console.log("refreshing")
+      reset()
+      comboSelect()
+      halted = false
+   }
+
+   if((keyWentDown(87) || keyWentDown(38)) & halted == false){
         input = 1
         console.log("up")
         arrowCheck()
    }
 
-   if(keyWentDown(83) || keyWentDown(40)){
+   if((keyWentDown(83) || keyWentDown(40)) & halted == false){
         input = 3
         console.log("down")
         arrowCheck()
    }
 
-   if(keyWentDown(65) || keyWentDown(37)){
+   if((keyWentDown(65) || keyWentDown(37)) & halted == false){
         input = 4
         console.log("left")
         arrowCheck()
    }
 
-   if(keyWentDown(68) || keyWentDown(39)){
+   if((keyWentDown(68) || keyWentDown(39)) & halted == false){
         input = 2  
         console.log("right")
         arrowCheck()
