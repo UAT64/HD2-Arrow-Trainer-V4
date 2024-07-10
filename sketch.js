@@ -43,7 +43,7 @@ var retry, retryImg
 var refresh, refreshImg
 var retryFrame, retryFrameImg
 var refreshFrame, refreshFrameImg
-var halted = false
+var halted = true
 
 
 function preload(){
@@ -297,6 +297,7 @@ function reset() {
    retry.destroy()
    retryFrame.destroy()
    //drawPoint()
+   halted = true
    
    inputs = []
    console.log("inputs: ", inputs)
@@ -320,6 +321,7 @@ function softReset() {
    retry.destroy()
    retryFrame.destroy()
    //drawPoint()
+   halted = true
 }
 
 function icons(){
@@ -372,7 +374,6 @@ function icons(){
    refresh.scale = 0.12
    refresh.addImage("refreshImg", refreshImg)
 
-   retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true
 
    //retry.debug = true
    //retryFrame.debug = true
@@ -427,9 +428,11 @@ function draw(){
 
    if(count == stratagems[setSelect][orderSelect].length){
       drawing = false
+      halted = false
 
       arrowGroup.setVisibleEach(true)
       arrowFrameGroup.setVisibleEach(true)
+      retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true
    }
 
 
