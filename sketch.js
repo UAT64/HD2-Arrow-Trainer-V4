@@ -30,7 +30,7 @@ var arrowGroup, arrowFrameGroup
 var input
 var drawing = true 
 var correctValue = 0
-var score
+var score = 0
 var inputs = []
 var widthCache, heightCache
 var pointX, pointY, point, point_img
@@ -63,7 +63,7 @@ function preload(){
     retryImg = loadImage("./assets/retry.png")
     refreshImg = loadImage("./assets/refresh.png")
     retryFrameImg = loadAnimation("./assets/retryFrameEmpty.png", "./assets/retryFrameHighlighted.png")
-    refreshFrameImg = loadAnimation("./assets/retryFrameEmpty.png", "./assets/retryFrameHighlighted.png")
+    refreshFrameImg = loadImage("./assets/refreshFrame.png")
 
     /*
     eagle = 0 to 8
@@ -87,7 +87,6 @@ function setup(){
     arrowGroup=new Group()
     arrowFrameGroup=new Group()
     comboSelect()
-    //drawPoint()
 }
 
 function updateCanvas(){
@@ -125,19 +124,12 @@ function drawPoint(){
 function arrows(){
     console.log("arrows called")
     console.log("Made arrow: ", count)
-    arrow = createSprite(/*pointX +*/ positionCount * 100, /*pointY +*/ rowCount * 100)
-    arrowFrame = createSprite(/*pointX +*/ positionCount * 100, /*pointY +*/ rowCount * 100)
+    arrow = createSprite(positionCount * 100, rowCount * 100)
+    arrowFrame = createSprite(positionCount * 100, rowCount * 100)
     arrowFrame.depth = arrow.depth += 1
 
-    arrow.x = /*pointX +*/ positionCount * 100
-    arrowFrame.x = /*pointX +*/ positionCount * 100
-
-    /*if(reloadedBefore == true){
-      arrow.x += 100
-      arrowFrame.x += 100
-    }*/
-
-    //arrow.debug = false
+    arrow.x = positionCount * 100
+    arrowFrame.x = positionCount * 100
 
     arrow.addAnimation("arrowAnim", arrowEmpty_img)
     arrow.pause()
@@ -155,7 +147,6 @@ function arrows(){
 
 
     var arrowRotation = stratagems[setSelect][orderSelect][count]
-    //var arrowFrameColour = setSelect
 
     switch(arrowRotation){
         case 1:
@@ -187,15 +178,14 @@ function arrows(){
     }
 
       
-      console.log("Before move for arrow:" , count)
-      console.log("Arrow.x = ",arrow.x)
-      console.log("Arrow.y = ",arrow.y)
+      console.log("Before move for arrow:" , count,
+         "Arrow.x = ",arrow.x,
+         "Arrow.y = ",arrow.y,
+         "Before move for arrowFrame:" , count,
+         "ArrowFrame.x = ",arrowFrame.x,
+         "ArrowFrame.y = ",arrowFrame.y
+      )
 
-      console.log("Before move for arrowFrame:" , count)
-      console.log("ArrowFrame.x = ",arrowFrame.x)
-      console.log("ArrowFrame.y = ",arrowFrame.y)
-
-      
       window.width = window.innerWidth
       window.height = window.innerHeight
 
@@ -203,11 +193,11 @@ function arrows(){
       arrow.x = 1
       arrowFrame.x = 1
       rowCount ++
-      arrow.y = /*pointY +*/ rowCount * 100
-      arrowFrame.y = /*pointY +*/ rowCount * 100
+      arrow.y = rowCount * 100
+      arrowFrame.y = rowCount * 100
       positionCount = 1
-      arrow.x = /*pointX +*/ positionCount * 100
-      arrowFrame.x = /*pointX +*/ positionCount * 100
+      arrow.x = positionCount * 100
+      arrowFrame.x = positionCount * 100
     }
 
     if(arrow.y >= window.innerHeight - 100 || arrowFrame.y >= window.innerHeight - 100){
@@ -216,13 +206,14 @@ function arrows(){
       softReset()
     }
 
-      console.log("After move for arrow:" , count)
-      console.log("Arrow.x = ",arrow.x)
-      console.log("Arrow.y = ",arrow.y)
+      console.log("After move for arrow:" , count,
+         "Arrow.x = ",arrow.x,
+         "Arrow.y = ",arrow.y,
+         "After move for arrowFrame:" , count,
+         "ArrowFrame.x = ",arrowFrame.x,
+         "ArrowFrame.y = ",arrowFrame.y
+      )
 
-      console.log("After move for arrowFrame:" , count)
-      console.log("ArrowFrame.x = ",arrowFrame.x)
-      console.log("ArrowFrame.y = ",arrowFrame.y)
       
       arrowFrame.setFrame(setSelect)
       console.log(inputs)
@@ -251,8 +242,10 @@ function rescale(){
 }
 
 function arrowCheck(){
+
    if((input == stratagems[setSelect][orderSelect][inputCount]) & (count >= stratagems[setSelect][orderSelect].length)){
       inputs[inputCount] = 1
+
       if (inputs[inputCount] == 1){
          arrowGroup.get(inputCount).setFrame(1)
       }
@@ -260,19 +253,20 @@ function arrowCheck(){
       inputCount ++
       correctValue ++
 
-   } else if(input != stratagems[setSelect][orderSelect][inputCount]){
-      console.log("Incorrect inputs");
-      arrowGroup.get(inputCount).setFrame(2)
-      halted = true
-      retryFrame.setFrame(1)
-      //reset();
-      inputs.length = 0
-   }
+      } else if(input != stratagems[setSelect][orderSelect][inputCount]){
+         console.log("Incorrect inputs");
+         arrowGroup.get(inputCount).setFrame(2)
+         halted = true
+         retryFrame.setFrame(1)
+         inputs.length = 0
+      }
+   
 
 }
  
 function reset() {
    console.log("reset called")
+   console.log("--------------------------------------------------------------------------")
    canvas.clear()
    arrowGroup.destroyEach(), arrowFrameGroup.destroyEach()
    arrowGroup.clear(), arrowFrameGroup.clear()
@@ -288,15 +282,12 @@ function reset() {
    inputCount = 0
    drawing = true
    correctValue = 0
-   //reloadedBefore = true
-   //point.destroy()
    icon.destroy()
    iconFrame.destroy()
    retry.destroy()
    refresh.destroy()
    retry.destroy()
    retryFrame.destroy()
-   //drawPoint()
    halted = true
    
    inputs = []
@@ -312,15 +303,12 @@ function softReset() {
    rowCount = 2
    positionCount = 1
    drawing = true
-   //reloadedBefore = true
-   //point.destroy()
    icon.destroy()
    iconFrame.destroy()
    retry.destroy()
    refresh.destroy()
    retry.destroy()
    retryFrame.destroy()
-   //drawPoint()
    halted = true
 }
 
@@ -337,50 +325,43 @@ function icons(){
 
    iconFrame = createSprite(positionCount * 100, rowCount * 100)
    iconFrame.addImage("iconFrameImg", iconFrame_img)
-   //iconFrame.debug = true
    iconFrame.visible = false
    iconFrame.scale = 1.8
 
    retryFrame = createSprite(100, 100)
+   retryFrame.addAnimation("retryFrameImg", retryFrameImg)
    retryFrame.pause()
    retryFrame.visible = false
    retryFrame.scale = 0.12
-   retryFrame.addAnimation("retryFrameImg", retryFrameImg)
-   retryFrame.pause()
+   rectMode(CENTER)
 
    refreshFrame = createSprite(200, 100)
+   refreshFrame.addImage("refreshFrameImg", refreshFrameImg)
    refreshFrame.visible = false
    refreshFrame.scale = 0.12
-   refreshFrame.addAnimation("refreshFrameImg", refreshFrameImg)
-   refreshFrame.pause()
+   rectMode(CENTER)
 
    icon = createSprite(positionCount * 100, rowCount * 100)
    icon.addAnimation("iconAnim", icon_img)
    icon.pause()
    icon.visible = false
    icon.scale = 1.8
-   //icon.debug = true
    
    iconAnimationValue = nameLocations[setSelect] + orderSelect
    icon.setFrame(iconAnimationValue)
 
    retry = createSprite(100, 100)
+   retry.addImage("retryImg", retryImg)
    retry.visible = false
    retry.scale = 0.12
-   retry.addImage("retryImg", retryImg)
 
    refresh = createSprite(200, 100)
-   refresh.visible = false
-   refresh.scale = 0.12
    refresh.addImage("refreshImg", refreshImg)
+   refresh.visible = false   
+   refresh.scale = 0.12
 
    retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true
-   halted = false
 
-   //retry.debug = true
-   //retryFrame.debug = true
-   //refresh.debug = true
-   //refreshFrame.debug = true
 }
 
 function draw(){
@@ -390,38 +371,27 @@ function draw(){
    point.x = pointX
    point.y = pointY
 
-   /*if(frameCount%40==0  &  window.innerHeight != heightCache || window.Innerwidth != widthCache){
-      updateCanvas()
-      softReset()
-      
-   }*/
-
    console.log(
       "Window.width: ", window.innerWidth,
       "window.height: ", window.innerHeight,
       "drawing is: ", drawing,
-      /*,
-       "mouse x is: ", World.mouseX,
-       "mouse y is: ", World.mouseY
-       */
-       "rowcount is: ", rowCount,
-       "positioncount is: ", positionCount,
-       "count is: ", count,
-       "strategem name is: ", stratagemNames[setSelect][orderSelect],
-       "iconAnimationValue is: ", iconAnimationValue
-      )
+      "rowcount is: ", rowCount,
+      "positioncount is: ", positionCount,
+      "count is: ", count,
+      "strategem name is: ", stratagemNames[setSelect][orderSelect],
+      "iconAnimationValue is: ", iconAnimationValue,
+      "score is: ", score
+   )
 
    window.width = window.innerWidth
-   //canvas.width = window.innerWidth
    window.height = window.innerHeight
-   //canvas.Height = window.innerHeight
 
    if(heightCache > window.innerHeight + 10 || heightCache < window.innerHeight - 10 || widthCache > window.innerWidth + 10 || widthCache < window.innerWidth - 10){
       updateCanvas()
       softReset()
    }
 
-   if(/*count != stratagems[setSelect][orderSelect].length &*/ drawing == true){
+   if(drawing == true){
         console.log("Calling arrows")
         arrows()
         count ++
@@ -430,27 +400,30 @@ function draw(){
 
    if(count == stratagems[setSelect][orderSelect].length){
       drawing = false
-      //halted = false
+      halted = false
 
       arrowGroup.setVisibleEach(true)
       arrowFrameGroup.setVisibleEach(true)
    }
 
-
-
-   //console.log("drawing is: ", drawing)
-
    if(keyWentDown(82) || mousePressedOver(retry)){
       console.log("retrying")
+      if(score > 0 & score > stratagems[setSelect][orderSelect].length * 10){
+         score -= stratagems[setSelect][orderSelect].length * 10
+      }
       reset()
-      halted = false
+      halted = true
    }
 
    if(keyWentDown(78) || mousePressedOver(refresh)){
-      console.log("refreshing")
-      reset()
-      comboSelect()
-      halted = false
+      if(score > 0 & score >= 100){
+         console.log("refreshing")
+         score -= 100
+         reset()
+         comboSelect()
+         halted = true
+      }
+
    }
 
    if((keyWentDown(87) || keyWentDown(38)) & halted == false){
@@ -477,7 +450,7 @@ function draw(){
         arrowCheck()
    }
 
-   if(correctValue == stratagems[setSelect][orderSelect].length ||  stratagems[setSelect][orderSelect][inputCount] ==5 ){
+   if(correctValue == stratagems[setSelect][orderSelect].length ||  stratagems[setSelect][orderSelect][inputCount] == 5 ){
       console.log("Correct inputs")
       score += stratagems[setSelect][orderSelect].length * 10
       reset()
