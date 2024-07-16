@@ -5,24 +5,33 @@ var positionCount = 1
 var rowCount = 2
 var inputCount = 0
 const stratagems = [
-   eagle = [ Eagle500Kg = [1, 2, 3, 3, 3], EagleClusterBomb = [1, 2, 3, 3, 2], EagleAirstrike = [1, 2, 3, 2], EagleStrafingRun = [1, 2, 2], EagleNapalmAirstrike = [1, 2, 3, 1], EagleSmokeStrike = [1, 2, 1, 3], EagleRocketPods = [1, 2, 1, 4], EagleRearm = [1, 1, 4, 1, 2] ],
-   orbital = [ OrbitalPrecisionStrike = [2, 2, 1], OrbitalAirburstStrike = [2, 2, 2], Orbital120MMBarage = [2, 2, 3, 4, 2, 3], Orbital380MMBarage = [2, 3, 1, 1, 4, 3, 3], OrbitalWalkingBarage = [2, 3, 2, 3, 2, 3], OrbitalLaser = [2, 3, 1, 2, 3], OrbitalRailcannon = [2, 1, 3, 3, 2], OrbitalGasStrike = [2, 2, 3, 2], OrbitalSmokeStrike = [2, 2, 3, 1], OrbitalGattlingBarage = [2, 3, 4, 1, 1], OrbitalEMSStrike = [2, 2, 4, 3] ],
-   support = [ Reinforce = [1, 3, 2, 4, 1], SOSBeacon = [1, 3, 2, 1], Resupply = [3, 3, 1, 2], SEAFArtillery = [2, 1, 1, 3], Hellbomb = [3, 1, 4, 3, 1, 2, 3, 1], SuperSSD = [3, 3, 3, 1, 1], UploadData= [4, 2, 1, 1, 1], SeismicProbe = [1, 1, 4, 2, 3, 3], SuperEarthFlag = [3, 1, 3, 1] ],
-   backpack = [ LasGuardDog = [3, 1, 4, 1, 2, 2], GunGuardDog = [3, 1, 4, 1, 2, 3], JumpPack = [3, 1, 1, 3, 1], ShieldGenPack = [3, 1, 4, 2, 4, 2], SupplyPack = [3, 4, 3, 1, 1, 3], BallisticShield = [3, 4, 3, 3, 1, 4] ],
-   weapon = [ MachineGun = [3, 4, 3, 1, 2], AntiMaterialRifle = [3, 4, 2, 1, 3], Stalwart = [3, 4, 3, 1, 1, 4], ExpedableAntiTank = [3, 3, 4, 1, 2], RecoillessRifle = [3, 4, 2, 2, 4], Flamethrower = [3, 4, 1, 3, 1], Autocannon = [3, 4, 3, 1, 1, 2], HeavyMachineGun = [3, 4, 1, 3, 3], Railgun = [3, 2, 3, 1, 4, 2], Spear = [3, 3, 1, 3, 3], GrenadeLauncher = [3, 4, 3, 1, 4], LaserCannon = [3, 2, 3, 1, 4, 4], ArcThrower = [3, 2, 3, 1, 4, 4], QuasarCannon = [3, 3, 1, 4, 2], Airburst = [3, 1, 1, 4, 2] ],
-   sentry = [ HMGEmplacement = [3, 1,4 , 2, 2, 4], ShieldGeneratorRelay = [3, 3, 4, 2, 4, 2], TeslaTower = [3, 1, 2, 1, 4, 2], APMinefield = [3, 4, 1, 2], IMinefield = [3, 4, 4, 3], MachineGunSentry = [3, 1, 2, 2, 1], GatlingSentry = [3, 1, 2, 4], MortarSentry = [3, 1, 2, 2, 3], AutocannonSentry = [3, 1, 2, 1, 4, 1], RocketSentry = [3, 1, 2, 2, 4], EMSMortarSentry = [3, 1, 2, 3, 2] ],
-   vehicle = [ PatriotExosuit = [4, 3, 2, 1, 4, 3, 3], EmancipatorExosuit = [4, 3, 2, 1, 4, 3, 1] ]
+   Eagle500Kg = [1, 2, 3, 3, 3], EagleClusterBomb = [1, 2, 3, 3, 2], EagleAirstrike = [1, 2, 3, 2], EagleStrafingRun = [1, 2, 2], EagleNapalmAirstrike = [1, 2, 3, 1], EagleSmokeStrike = [1, 2, 1, 3], EagleRocketPods = [1, 2, 1, 4], EagleRearm = [1, 1, 4, 1, 2],
+   OrbitalPrecisionStrike = [2, 2, 1], OrbitalAirburstStrike = [2, 2, 2], Orbital120MMBarage = [2, 2, 3, 4, 2, 3], Orbital380MMBarage = [2, 3, 1, 1, 4, 3, 3], OrbitalWalkingBarage = [2, 3, 2, 3, 2, 3], OrbitalLaser = [2, 3, 1, 2, 3], OrbitalRailcannon = [2, 1, 3, 3, 2], OrbitalGasStrike = [2, 2, 3, 2], OrbitalSmokeStrike = [2, 2, 3, 1], OrbitalGattlingBarage = [2, 3, 4, 1, 1], OrbitalEMSStrike = [2, 2, 4, 3],
+   Reinforce = [1, 3, 2, 4, 1], SOSBeacon = [1, 3, 2, 1], Resupply = [3, 3, 1, 2], SEAFArtillery = [2, 1, 1, 3], Hellbomb = [3, 1, 4, 3, 1, 2, 3, 1], SuperSSD = [3, 3, 3, 1, 1], UploadData= [4, 2, 1, 1, 1], SeismicProbe = [1, 1, 4, 2, 3, 3], SuperEarthFlag = [3, 1, 3, 1],
+   LasGuardDog = [3, 1, 4, 1, 2, 2], GunGuardDog = [3, 1, 4, 1, 2, 3], JumpPack = [3, 1, 1, 3, 1], ShieldGenPack = [3, 1, 4, 2, 4, 2], SupplyPack = [3, 4, 3, 1, 1, 3], BallisticShield = [3, 4, 3, 3, 1, 4],
+   MachineGun = [3, 4, 3, 1, 2], AntiMaterialRifle = [3, 4, 2, 1, 3], Stalwart = [3, 4, 3, 1, 1, 4], ExpedableAntiTank = [3, 3, 4, 1, 2], RecoillessRifle = [3, 4, 2, 2, 4], Flamethrower = [3, 4, 1, 3, 1], Autocannon = [3, 4, 3, 1, 1, 2], HeavyMachineGun = [3, 4, 1, 3, 3], Railgun = [3, 2, 3, 1, 4, 2], Spear = [3, 3, 1, 3, 3], GrenadeLauncher = [3, 4, 3, 1, 4], LaserCannon = [3, 2, 3, 1, 4, 4], ArcThrower = [3, 2, 3, 1, 4, 4], QuasarCannon = [3, 3, 1, 4, 2], Airburst = [3, 1, 1, 4, 2],
+   HMGEmplacement = [3, 1,4 , 2, 2, 4], ShieldGeneratorRelay = [3, 3, 4, 2, 4, 2], TeslaTower = [3, 1, 2, 1, 4, 2], APMinefield = [3, 4, 1, 2], IMinefield = [3, 4, 4, 3], MachineGunSentry = [3, 1, 2, 2, 1], GatlingSentry = [3, 1, 2, 4], MortarSentry = [3, 1, 2, 2, 3], AutocannonSentry = [3, 1, 2, 1, 4, 1], RocketSentry = [3, 1, 2, 2, 4], EMSMortarSentry = [3, 1, 2, 3, 2],
+   PatriotExosuit = [4, 3, 2, 1, 4, 3, 3], EmancipatorExosuit = [4, 3, 2, 1, 4, 3, 1]
 ]
 const stratagemNames = [
-   eagle = [ "Eagle 500Kg Bomb", "Eagle Cluster Bomb", "Eagle Airstrike", "Eagle Strafing Run", "Eagle Napalm Airstrike", "Eagle Smoke Strike", "Eagle 100MM Rocket Pods", "Eagle Rearm"],
-   orbital = ["Orbital Precision Strike", "Orbital Airburst Strike", "Orbital 120MM HE Barage", "Orbital 380MM HE Barage", "Orbital Walking Barage", "Orbital Laser", "Orbital Railcannon Strike", "Orbital Gas Strike", "Orbital Smoke Strike", "Orbital Gattling Barage", "Orbital EMS Strike" ],
-   support = [ "Reinforce", "SOS Beacon", "Resupply", "SEAF Artillery", "NUX-223 Hellbomb", "SSSD Delivery", "Upload Data", "Seismic Probe", "Super Earth Flag" ],
-   backpack = [ "AX/LAS-5 Guard Dog Rover", "AX/AR023 Guard Dog", "LIFT-180 Jump Pack", "SH-32 Shield Generator Pack", "B-1 Supply Pack", "SH-20 Ballistic Shield Backpack" ],
-   weapon = [ "MG-43 Machine Gun", "APW-1 Anti-Materia Rifle", "M-105 Stalwart", "EAT-17 Expendable Anti-Tank", "GR-8 Recoilless Rifle", "FLAM-40 Flamethrower", "AC-8 Autocannon", "MG-206 Heavy Machine Gun", "RS-422 Railgun", "FAF-14 SPEAR Launcher", "GL-21 Grenade Launcher", "LAS-98 Laser Cannon", "ARC-3 Arc Thrower", "LAS-99 Quasar Cannon", "RL-77 Airburst Rocket Launcher" ],
-   sentry = [ "E/MG-101 HMG Emplacement", "FX-12 Shield Generator Relay", "A/ARC-3 Tesla Tower", "MD-6 Anti-Personnel Minefield", "MD-14 Inceniary Mines", "A/MG-43 Machine Gun Sentry", "A/G-16 Gattling Sentry", "A/M-12 Mortar Sentry", "A/AC-8 Autocannon Sentry", "A/MLS-4X Rocket Sentry", "A/M-23 EMS Mortar Sentry" ],
-   vehicle = [ "EXO-45 Patriot Exosuit", "EXO-49 Emancipator Exosuit"]
+   "Eagle 500Kg Bomb", "Eagle Cluster Bomb", "Eagle Airstrike", "Eagle Strafing Run", "Eagle Napalm Airstrike", "Eagle Smoke Strike", "Eagle 100MM Rocket Pods", "Eagle Rearm",
+   "Orbital Precision Strike", "Orbital Airburst Strike", "Orbital 120MM HE Barage", "Orbital 380MM HE Barage", "Orbital Walking Barage", "Orbital Laser", "Orbital Railcannon Strike", "Orbital Gas Strike", "Orbital Smoke Strike", "Orbital Gattling Barage", "Orbital EMS Strike",
+   "Reinforce", "SOS Beacon", "Resupply", "SEAF Artillery", "NUX-223 Hellbomb", "SSSD Delivery", "Upload Data", "Seismic Probe", "Super Earth Flag",
+   "AX/LAS-5 Guard Dog Rover", "AX/AR023 Guard Dog", "LIFT-180 Jump Pack", "SH-32 Shield Generator Pack", "B-1 Supply Pack", "SH-20 Ballistic Shield Backpack",
+   "MG-43 Machine Gun", "APW-1 Anti-Materia Rifle", "M-105 Stalwart", "EAT-17 Expendable Anti-Tank", "GR-8 Recoilless Rifle", "FLAM-40 Flamethrower", "AC-8 Autocannon", "MG-206 Heavy Machine Gun", "RS-422 Railgun", "FAF-14 SPEAR Launcher", "GL-21 Grenade Launcher", "LAS-98 Laser Cannon", "ARC-3 Arc Thrower", "LAS-99 Quasar Cannon", "RL-77 Airburst Rocket Launcher",
+   "E/MG-101 HMG Emplacement", "FX-12 Shield Generator Relay", "A/ARC-3 Tesla Tower", "MD-6 Anti-Personnel Minefield", "MD-14 Inceniary Mines", "A/MG-43 Machine Gun Sentry", "A/G-16 Gattling Sentry", "A/M-12 Mortar Sentry", "A/AC-8 Autocannon Sentry", "A/MLS-4X Rocket Sentry", "A/M-23 EMS Mortar Sentry",
+   "EXO-45 Patriot Exosuit", "EXO-49 Emancipator Exosuit"
 ]
-var orderSelect, setSelect
+const StratagemColours = [
+   0, 0, 0, 0, 0, 0, 0, 0,
+   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+   2, 2, 2, 2, 2, 2, 2, 2, 2,
+   3, 3, 3, 3, 3, 3,
+   4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+   5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+   6, 6
+]
+var stratagemSelect
 var canvas
 let arrow, arrowFrame
 var arrowEmpty_img, arrowFilled_img, arrowFrame_img
@@ -37,7 +46,7 @@ var pointX, pointY, point, point_img
 let icon, iconFrame
 var icon_img, iconFrame_img
 var loadIcons = false
-var nameLocations = [0, 8, 19, 28, 34, 49, 60]
+var setLocations = [0, 8, 19, 28, 34, 49, 60]
 var iconAnimationValue
 var retry, retryImg
 var refresh, refreshImg
@@ -102,16 +111,13 @@ function updateCanvas(){
 
 }
 
-
 function comboSelect(){
-   setSelect = Math.floor(Math.random() * stratagems.length);
-   orderSelect = Math.floor(Math.random() * stratagems[setSelect].length);
-   for(var i = 0; i < stratagems[setSelect][orderSelect].length; i++){
+   stratagemSelect = Math.floor(Math.random() * stratagems.length)
+   for(var i = 0; i < stratagems[stratagemSelect].length; i++){
       inputs.push(0)
     }
     drawing = true
 }
-
 
 function drawPoint(){
    point = createSprite(pointX, pointY)
@@ -119,77 +125,75 @@ function drawPoint(){
    point.depth = 90
 }
 
-
-
 function arrows(){
-    console.log("arrows called")
-    console.log("Made arrow: ", count)
-    arrow = createSprite(positionCount * 100, rowCount * 100)
-    arrowFrame = createSprite(positionCount * 100, rowCount * 100)
-    arrowFrame.depth = arrow.depth += 1
+   console.log("arrows called")
+   console.log("Made arrow: ", count)
+   arrow = createSprite(positionCount * 100, rowCount * 100)
+   arrowFrame = createSprite(positionCount * 100, rowCount * 100)
+   arrowFrame.depth = arrow.depth += 1
 
-    arrow.x = positionCount * 100
-    arrowFrame.x = positionCount * 100
+   arrow.x = positionCount * 100
+   arrowFrame.x = positionCount * 100
 
-    arrow.addAnimation("arrowAnim", arrowEmpty_img)
-    arrow.pause()
+   arrow.addAnimation("arrowAnim", arrowEmpty_img)
+   arrow.pause()
 
-    arrowFrame.addAnimation("arrowFrameAnim", arrowFrame_img)
-    arrowFrame.pause()
+   arrowFrame.addAnimation("arrowFrameAnim", arrowFrame_img)
+   arrowFrame.pause()
 
-    arrow.visible = false
-    arrow.scale = 0.12
+   arrow.visible = false
+   arrow.scale = 0.12
 
-    arrowFrame.visible = false
-    arrowFrame.scale = 0.12
-    rectMode(CENTER)
+   arrowFrame.visible = false
+   arrowFrame.scale = 0.12
+   rectMode(CENTER)
 
 
 
-    var arrowRotation = stratagems[setSelect][orderSelect][count]
+   var arrowRotation = stratagems[stratagemSelect][count]
 
-    switch(arrowRotation){
-        case 1:
-        arrow.rotation = 0
-        arrowFrame.rotation = 0
-        break
+   switch(arrowRotation){
+     case 1:
+     arrow.rotation = 0
+     arrowFrame.rotation = 0
+     break
 
-        case 2:
-        arrow.rotation = 90
-        arrowFrame.rotation = 90
-        break
+     case 2:
+     arrow.rotation = 90
+     arrowFrame.rotation = 90
+     break
 
-        case 3:
-        arrow.rotation = 180
-        arrowFrame.rotation = 180
-        break
+     case 3:
+     arrow.rotation = 180
+     arrowFrame.rotation = 180
+     break
 
-        case 4:
-        arrow.rotation = 270
-        arrowFrame.rotation = 270
-        break
+     case 4:
+     arrow.rotation = 270
+     arrowFrame.rotation = 270
+     break
 
-        case 5:
-        arrow.visible = false
-        arrowFrame.visible = false
+     case 5:
+     arrow.visible = false
+     arrowFrame.visible = false
 
-        default:
-            break
-    }
+     default:
+     break
+   }
 
       
-      console.log("Before move for arrow:" , count,
-         "Arrow.x = ",arrow.x,
-         "Arrow.y = ",arrow.y,
-         "Before move for arrowFrame:" , count,
-         "ArrowFrame.x = ",arrowFrame.x,
-         "ArrowFrame.y = ",arrowFrame.y
-      )
+   console.log("Before move for arrow:" , count,
+      "Arrow.x = ",arrow.x,
+      "Arrow.y = ",arrow.y,
+      "Before move for arrowFrame:" , count,
+      "ArrowFrame.x = ",arrowFrame.x,
+      "ArrowFrame.y = ",arrowFrame.y
+   )
 
-      window.width = window.innerWidth
-      window.height = window.innerHeight
+   window.width = window.innerWidth
+   window.height = window.innerHeight
 
-    if(arrow.x >= window.innerWidth - 100 || arrowFrame.x >= window.innerWidth - 100){
+   if(arrow.x >= window.innerWidth - 100 || arrowFrame.x >= window.innerWidth - 100){
       arrow.x = 1
       arrowFrame.x = 1
       rowCount ++
@@ -198,42 +202,40 @@ function arrows(){
       positionCount = 1
       arrow.x = positionCount * 100
       arrowFrame.x = positionCount * 100
+   }
+
+   if(arrow.y >= window.innerHeight - 100 || arrowFrame.y >= window.innerHeight - 100){
+     rescale()
+     updateCanvas()
+     softReset()
     }
 
-    if(arrow.y >= window.innerHeight - 100 || arrowFrame.y >= window.innerHeight - 100){
-      rescale()
-      updateCanvas()
-      softReset()
-    }
-
-      console.log("After move for arrow:" , count,
-         "Arrow.x = ",arrow.x,
-         "Arrow.y = ",arrow.y,
-         "After move for arrowFrame:" , count,
-         "ArrowFrame.x = ",arrowFrame.x,
-         "ArrowFrame.y = ",arrowFrame.y
-      )
+   console.log("After move for arrow:" , count,
+      "Arrow.x = ",arrow.x,
+      "Arrow.y = ",arrow.y,
+      "After move for arrowFrame:" , count,
+      "ArrowFrame.x = ",arrowFrame.x,
+      "ArrowFrame.y = ",arrowFrame.y
+   )
 
       
-      arrowFrame.setFrame(setSelect)
-      console.log(inputs)
+   arrowFrame.setFrame(StratagemColours[stratagemSelect])
+   console.log(inputs)
 
-      if(inputs[count] == 1){
-         arrow.setFrame(1)
-         console.log("setFrame 1")
-      } else if (inputs[count] != 1){
-         arrow.setFrame(0)
-         console.log("setFrame 0")
-      }
+   if(inputs[count] == 1){
+      arrow.setFrame(1)
+      console.log("setFrame 1")
+   } else if (inputs[count] != 1){
+      arrow.setFrame(0)
+      console.log("setFrame 0")
+   }
 
-      if(count == stratagems[setSelect][orderSelect].length - 1){
-         icons()
-      }
+   if(count == stratagems[stratagemSelect].length - 1){
+      icons()
+   }
 
-
-      
-    arrowGroup.add(arrow)
-    arrowFrameGroup.add(arrowFrame)
+   arrowGroup.add(arrow)
+   arrowFrameGroup.add(arrowFrame)
 }
 
 function rescale(){
@@ -243,7 +245,7 @@ function rescale(){
 
 function arrowCheck(){
 
-   if((input == stratagems[setSelect][orderSelect][inputCount]) & (count >= stratagems[setSelect][orderSelect].length)){
+   if((input == stratagems[stratagemSelect][inputCount]) & (count >= stratagems[stratagemSelect].length)){
       inputs[inputCount] = 1
 
       if (inputs[inputCount] == 1){
@@ -253,7 +255,7 @@ function arrowCheck(){
       inputCount ++
       correctValue ++
 
-      } else if(input != stratagems[setSelect][orderSelect][inputCount]){
+      } else if(input != stratagems[stratagemSelect][inputCount][inputCount]){
          console.log("Incorrect inputs");
          arrowGroup.get(inputCount).setFrame(2)
          halted = true
@@ -266,7 +268,7 @@ function arrowCheck(){
  
 function reset() {
    console.log("reset called")
-   console.log("--------------------------------------------------------------------------")
+   console.log("-----------------------------------------------------")
    canvas.clear()
    arrowGroup.destroyEach(), arrowFrameGroup.destroyEach()
    arrowGroup.clear(), arrowFrameGroup.clear()
@@ -320,7 +322,13 @@ function icons(){
    push()
    fill(255);
    textSize(30)
-   text(stratagemNames[setSelect][orderSelect], (positionCount + 1) * 85, rowCount * 105 )
+   text(stratagemNames[stratagemSelect], (positionCount + 1) * 85, rowCount * 105 )
+   pop();
+
+   push()
+   fill(255);
+   textSize(30)
+   text("Score is: " + score,  260, 100)
    pop();
 
    iconFrame = createSprite(positionCount * 100, rowCount * 100)
@@ -347,7 +355,7 @@ function icons(){
    icon.visible = false
    icon.scale = 1.8
    
-   iconAnimationValue = nameLocations[setSelect] + orderSelect
+   iconAnimationValue = stratagemSelect
    icon.setFrame(iconAnimationValue)
 
    retry = createSprite(100, 100)
@@ -378,9 +386,10 @@ function draw(){
       "rowcount is: ", rowCount,
       "positioncount is: ", positionCount,
       "count is: ", count,
-      "strategem name is: ", stratagemNames[setSelect][orderSelect],
+      "strategem name is: ", stratagemNames[stratagemSelect],
       "iconAnimationValue is: ", iconAnimationValue,
-      "score is: ", score
+      "score is: ", score,
+      "halted is: ", halted
    )
 
    window.width = window.innerWidth
@@ -398,7 +407,7 @@ function draw(){
         positionCount ++
    }
 
-   if(count == stratagems[setSelect][orderSelect].length){
+   if(count == stratagems[stratagemSelect].length){
       drawing = false
       halted = false
 
@@ -408,8 +417,8 @@ function draw(){
 
    if(keyWentDown(82) || mousePressedOver(retry)){
       console.log("retrying")
-      if(score > 0 & score > stratagems[setSelect][orderSelect].length * 10){
-         score -= stratagems[setSelect][orderSelect].length * 10
+      if(score > 50){
+         score = score - 50
       }
       reset()
       halted = true
@@ -450,9 +459,9 @@ function draw(){
         arrowCheck()
    }
 
-   if(correctValue == stratagems[setSelect][orderSelect].length ||  stratagems[setSelect][orderSelect][inputCount] == 5 ){
+   if(correctValue == stratagems[stratagemSelect].length ||  stratagems[stratagemSelect][inputCount] == 5 ){
       console.log("Correct inputs")
-      score += stratagems[setSelect][orderSelect].length * 10
+      score += stratagems[stratagemSelect].length * 10
       reset()
       comboSelect()
 
