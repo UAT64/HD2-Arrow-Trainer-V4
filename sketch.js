@@ -236,6 +236,13 @@ function arrows(){
 
    arrowGroup.add(arrow)
    arrowFrameGroup.add(arrowFrame)
+
+   if(count == stratagems[stratagemSelect].length - 1){
+      drawing = false
+      halted = false
+      arrowGroup.setVisibleEach(true)
+      arrowFrameGroup.setVisibleEach(true)
+   }
 }
 
 function rescale(){
@@ -245,15 +252,15 @@ function rescale(){
 
 function arrowCheck(){
 
-   if((input == stratagems[stratagemSelect][inputCount]) & (count >= stratagems[stratagemSelect].length)){
+   if((input == stratagems[stratagemSelect][inputCount]) & (count >= stratagems[stratagemSelect].length) & (halted == false)){
       inputs[inputCount] = 1
 
-      if (inputs[inputCount] == 1){
+      if ((inputs[inputCount] == 1) & (halted == false)){
          arrowGroup.get(inputCount).setFrame(1)
+         inputCount ++
+         correctValue ++
       }
       
-      inputCount ++
-      correctValue ++
 
       } else if(input != stratagems[stratagemSelect][inputCount][inputCount]){
          console.log("Incorrect inputs");
@@ -407,14 +414,6 @@ function draw(){
         positionCount ++
    }
 
-   if(count == stratagems[stratagemSelect].length){
-      drawing = false
-      halted = false
-
-      arrowGroup.setVisibleEach(true)
-      arrowFrameGroup.setVisibleEach(true)
-   }
-
    if(keyWentDown(82) || mousePressedOver(retry)){
       console.log("retrying")
       if(score > 50){
@@ -469,3 +468,6 @@ function draw(){
 
    drawSprites()
 }
+
+
+
