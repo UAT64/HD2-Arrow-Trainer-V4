@@ -107,8 +107,6 @@ function updateCanvas(){
    canvas = createCanvas(window.innerWidth, window.innerHeight)
    console.log("Window.width: ", window.width,"window.height: ", window.height)
    background(rgb(69, 69, 69))
-   
-
 }
 
 function comboSelect(){
@@ -182,7 +180,8 @@ function arrows(){
    }
 
       
-   console.log("Before move for arrow:" , count,
+   console.log(
+      "Before move for arrow:" , count,
       "Arrow.x = ",arrow.x,
       "Arrow.y = ",arrow.y,
       "Before move for arrowFrame:" , count,
@@ -205,12 +204,13 @@ function arrows(){
    }
 
    if(arrow.y >= window.innerHeight - 100 || arrowFrame.y >= window.innerHeight - 100){
-     rescale()
-     updateCanvas()
-     softReset()
+      rescale()
+      updateCanvas()
+      softReset()
     }
 
-   console.log("After move for arrow:" , count,
+   console.log(
+      "After move for arrow:" , count,
       "Arrow.x = ",arrow.x,
       "Arrow.y = ",arrow.y,
       "After move for arrowFrame:" , count,
@@ -246,8 +246,8 @@ function arrows(){
 }
 
 function rescale(){
-      arrowGroup.setScaleEach(0.08)
-      arrowFrameGroup.setScaleEach(0.08)
+   arrowGroup.setScaleEach(0.08)
+   arrowFrameGroup.setScaleEach(0.08)
 }
 
 function arrowCheck(){
@@ -298,7 +298,6 @@ function reset() {
    retry.destroy()
    retryFrame.destroy()
    halted = true
-   
    inputs = []
    console.log("inputs: ", inputs)
 }
@@ -408,10 +407,10 @@ function draw(){
    }
 
    if(drawing == true){
-        console.log("Calling arrows")
-        arrows()
-        count ++
-        positionCount ++
+      console.log("Calling arrows")
+      arrows()
+      count ++
+      positionCount ++
    }
 
    if(keyWentDown(82) || mousePressedOver(retry)){
