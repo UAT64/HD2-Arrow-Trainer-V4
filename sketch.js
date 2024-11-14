@@ -2,6 +2,7 @@ var count = 0
 var positionCount = 1
 var rowCount = 2
 var inputCount = 0
+var debug = false
 
 const stratagems = [
    Eagle500Kg = [1, 2, 3, 3, 3], EagleClusterBomb = [1, 2, 3, 3, 2], EagleAirstrike = [1, 2, 3, 2], EagleStrafingRun = [1, 2, 2], EagleNapalmAirstrike = [1, 2, 3, 1], EagleSmokeStrike = [1, 2, 1, 3], EagleRocketPods = [1, 2, 1, 4], EagleRearm = [1, 1, 4, 1, 2],
@@ -78,7 +79,9 @@ function setup(){
    canvas = createCanvas(window.innerWidth, window.innerHeight)
    widthCache = window.innerWidth
    heightCache = window.innerHeight
-   console.log("Window.width: ", window.innerWidth,"window.height: ", window.innerHeight)
+   if(debug == true){
+      console.log("Window.width: ", window.innerWidth,"window.height: ", window.innerHeight)
+   }
    frameRate(80) 
    background(rgb(69, 69, 69))
    arrowGroup=new Group()
@@ -93,7 +96,9 @@ function updateCanvas(){
    widthCache = window.innerWidth
    heightCache = window.innerHeight
    canvas = createCanvas(window.innerWidth, window.innerHeight)
-   console.log("Window.width: ", window.width,"window.height: ", window.height)
+   if(debug == true){
+      console.log("Window.width: ", window.width,"window.height: ", window.height)
+   }
    background(rgb(69, 69, 69))
 }
 
@@ -107,7 +112,10 @@ function comboSelect(){
 
 function arrows(){
    console.log("arrows called")
-   console.log("Made arrow: ", count)
+   if(debug == true){
+      console.log("Made arrow: ", count)
+   }
+   
    arrow = createSprite(positionCount * 100, rowCount * 100)
    arrowFrame = createSprite(positionCount * 100, rowCount * 100)
    arrowFrame.depth = arrow.depth += 1
@@ -158,14 +166,16 @@ function arrows(){
      break
    }
 
-   console.log(
-      "Before move for arrow:" , count,
-      "Arrow.x = ",arrow.x,
-      "Arrow.y = ",arrow.y,
-      "Before move for arrowFrame:" , count,
-      "ArrowFrame.x = ",arrowFrame.x,
-      "ArrowFrame.y = ",arrowFrame.y
-   )
+   if(debug == true){
+      console.log(
+         "Before move for arrow:" , count,
+         "Arrow.x = ",arrow.x,
+         "Arrow.y = ",arrow.y,
+        "Before move for arrowFrame:" , count,
+         "ArrowFrame.x = ",arrowFrame.x,
+        "ArrowFrame.y = ",arrowFrame.y
+      )
+   }
 
    window.width = window.innerWidth
    window.height = window.innerHeight
@@ -187,24 +197,33 @@ function arrows(){
       softReset()
    }
 
-   console.log(
-      "After move for arrow:" , count,
-      "Arrow.x = ",arrow.x,
-      "Arrow.y = ",arrow.y,
-      "After move for arrowFrame:" , count,
-      "ArrowFrame.x = ",arrowFrame.x,
-      "ArrowFrame.y = ",arrowFrame.y
-   )
+   if(debug == true){
+      console.log(
+         "After move for arrow:" , count,
+         "Arrow.x = ",arrow.x,
+         "Arrow.y = ",arrow.y,
+         "After move for arrowFrame:" , count,
+         "ArrowFrame.x = ",arrowFrame.x,
+         "ArrowFrame.y = ",arrowFrame.y
+      )
+   }
 
    arrowFrame.setFrame(StratagemColours[stratagemSelect])
-   console.log(inputs)
+   if(debug == true){
+      console.log(inputs)
+   }
+   
 
    if(inputs[count] == 1){
       arrow.setFrame(1)
-      console.log("setFrame 1")
+      if(debug == true){
+         console.log("setFrame 1")
+      }
    } else if (inputs[count] != 1){
       arrow.setFrame(0)
-      console.log("setFrame 0")
+      if(debug == true){
+         console.log("setFrame 0")
+      }
    }
 
    if(count == stratagems[stratagemSelect].length - 1){
@@ -246,7 +265,7 @@ function arrowCheck(){
  
 function reset() {
    console.log("reset called")
-   console.log("-----------------------------------------------------")
+   console.log(" ")
    canvas.clear()
    arrowGroup.destroyEach(), arrowFrameGroup.destroyEach()
    arrowGroup.clear(), arrowFrameGroup.clear()
@@ -254,7 +273,6 @@ function reset() {
    widthCache = window.innerWidth
    heightCache = window.innerHeight
    canvas = createCanvas(window.innerWidth, window.innerHeight)
-   console.log(window.width, window.height) 
    background(rgb(69, 69, 69))
    count = 0
    rowCount = 2
@@ -270,7 +288,6 @@ function reset() {
    retryFrame.destroy()
    halted = true
    inputs = []
-   console.log("inputs: ", inputs)
 }
 
 function softReset() {
@@ -349,18 +366,28 @@ function icons(){
 }
 
 function draw(){
-   console.log(
-      "Window.width: ", window.innerWidth,
-      "window.height: ", window.innerHeight,
-      "drawing is: ", drawing,
-      "rowcount is: ", rowCount,
-      "positioncount is: ", positionCount,
-      "count is: ", count,
-      "strategem name is: ", stratagemNames[stratagemSelect],
-      "iconAnimationValue is: ", iconAnimationValue,
-      "score is: ", score,
-      "halted is: ", halted
-   )
+
+   if(debug == true){
+      console.log(
+         "Window.width: ", window.innerWidth,
+         "window.height: ", window.innerHeight,
+         "drawing is: ", drawing,
+         "rowcount is: ", rowCount,
+         "positioncount is: ", positionCount,
+         "count is: ", count,
+         "strategem name is: ", stratagemNames[stratagemSelect],
+         "iconAnimationValue is: ", iconAnimationValue,
+         "score is: ", score,
+         "halted is: ", halted
+      )
+   }
+
+   if(keyWentDown(222)){
+      debug = true   
+   } else if(keyWentDown(222) & debug == true){
+      debug = false
+   }
+   
 
    window.width = window.innerWidth
    window.height = window.innerHeight
