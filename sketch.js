@@ -2,7 +2,7 @@ var count = 0
 var positionCount = 1
 var rowCount = 2
 var inputCount = 0
-var debug = false
+var debug = 0
 
 const stratagems = [
    Eagle500Kg = [1, 2, 3, 3, 3], EagleClusterBomb = [1, 2, 3, 3, 2], EagleAirstrike = [1, 2, 3, 2], EagleStrafingRun = [1, 2, 2], EagleNapalmAirstrike = [1, 2, 3, 1], EagleSmokeStrike = [1, 2, 1, 3], EagleRocketPods = [1, 2, 1, 4], EagleRearm = [1, 1, 4, 1, 2],
@@ -79,7 +79,7 @@ function setup(){
    canvas = createCanvas(window.innerWidth, window.innerHeight)
    widthCache = window.innerWidth
    heightCache = window.innerHeight
-   if(debug == true){
+   if(debug == 1){
       console.log("Window.width: ", window.innerWidth,"window.height: ", window.innerHeight)
    }
    frameRate(80) 
@@ -96,7 +96,7 @@ function updateCanvas(){
    widthCache = window.innerWidth
    heightCache = window.innerHeight
    canvas = createCanvas(window.innerWidth, window.innerHeight)
-   if(debug == true){
+   if(debug == 1){
       console.log("Window.width: ", window.width,"window.height: ", window.height)
    }
    background(rgb(69, 69, 69))
@@ -111,8 +111,8 @@ function comboSelect(){
 }
 
 function arrows(){
-   console.log("arrows called")
-   if(debug == true){
+   if(debug == 1){
+      console.log("arrows called")
       console.log("Made arrow: ", count)
    }
    
@@ -166,7 +166,7 @@ function arrows(){
      break
    }
 
-   if(debug == true){
+   if(debug == 1){
       console.log(
          "Before move for arrow:" , count,
          "Arrow.x = ",arrow.x,
@@ -197,7 +197,7 @@ function arrows(){
       softReset()
    }
 
-   if(debug == true){
+   if(debug == 1){
       console.log(
          "After move for arrow:" , count,
          "Arrow.x = ",arrow.x,
@@ -209,19 +209,19 @@ function arrows(){
    }
 
    arrowFrame.setFrame(StratagemColours[stratagemSelect])
-   if(debug == true){
+   if(debug == 1){
       console.log(inputs)
    }
    
 
    if(inputs[count] == 1){
       arrow.setFrame(1)
-      if(debug == true){
+      if(debug == 1){
          console.log("setFrame 1")
       }
    } else if (inputs[count] != 1){
       arrow.setFrame(0)
-      if(debug == true){
+      if(debug == 1){
          console.log("setFrame 0")
       }
    }
@@ -264,8 +264,10 @@ function arrowCheck(){
 }
  
 function reset() {
-   console.log("reset called")
-   console.log(" ")
+   if(debug == 1){
+      console.log("reset called")
+      console.log(" ")
+   }
    canvas.clear()
    arrowGroup.destroyEach(), arrowFrameGroup.destroyEach()
    arrowGroup.clear(), arrowFrameGroup.clear()
@@ -291,7 +293,9 @@ function reset() {
 }
 
 function softReset() {
-   console.log("softReset called")
+   if(debug == 1){
+      console.log("softReset called")
+   }
    arrowGroup.destroyEach(), arrowFrameGroup.destroyEach()
    arrowGroup.clear(), arrowFrameGroup.clear()
    arrowGroup.remove(arrow), arrowFrameGroup.remove(arrowFrame)
@@ -367,7 +371,7 @@ function icons(){
 
 function draw(){
 
-   if(debug == true){
+   if(debug == 1){
       console.log(
          "Window.width: ", window.innerWidth,
          "window.height: ", window.innerHeight,
@@ -382,10 +386,10 @@ function draw(){
       )
    }
 
-   if(keyWentDown(222)){
-      debug = true   
-   } else if(keyWentDown(222) & debug == true){
-      debug = false
+   if(keyWentDown(222) & debug != 1){
+      debug += 1   
+   } else if(keyWentDown(222) & debug == 1){
+      debug -= 1
    }
    
 
@@ -398,14 +402,18 @@ function draw(){
    }
 
    if(drawing == true){
-      console.log("Calling arrows")
+      if(debug == 1){
+         console.log("Calling arrows")
+      }
       arrows()
       count ++
       positionCount ++
    }
 
    if(keyWentDown(82) || mousePressedOver(retry)){
-      console.log("retrying")
+      if(debug == 1){
+         console.log("retrying")
+      }
       if(score > 50){
          score = score - 50
       }
@@ -415,7 +423,9 @@ function draw(){
 
    if(keyWentDown(78) || mousePressedOver(refresh)){
       if(score > 0 & score >= 100){
-         console.log("refreshing")
+         if(debug == 1){
+            console.log("refreshing")
+         }
          score -= 100
          reset()
          comboSelect()
@@ -425,30 +435,40 @@ function draw(){
 
    if((keyWentDown(87) || keyWentDown(38)) & halted == false){
       input = 1
-      console.log("up")
+      if(debug == 1){
+         console.log("up")
+      }
       arrowCheck()
    }
 
    if((keyWentDown(83) || keyWentDown(40)) & halted == false){
       input = 3
-      console.log("down")
+      if(debug == 1){
+         console.log("down")
+      }
       arrowCheck()
    }
 
    if((keyWentDown(65) || keyWentDown(37)) & halted == false){
       input = 4
-      console.log("left")
+      if(debug == 1){
+         console.log("left")
+      }
       arrowCheck()
    }
 
    if((keyWentDown(68) || keyWentDown(39)) & halted == false){
       input = 2  
-      console.log("right")
+      if(debug == 1){
+         console.log("right")
+      }
       arrowCheck()
    }
 
    if(correctValue == stratagems[stratagemSelect].length ||  stratagems[stratagemSelect][inputCount] == 5 ){
-      console.log("Correct inputs")
+      if(debug == 1){
+         console.log("Correct inputs")
+      }
       score += stratagems[stratagemSelect].length * 10
       reset()
       comboSelect()
