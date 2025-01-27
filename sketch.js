@@ -446,6 +446,27 @@ function icons(){
 
 function draw(){
 
+   for (let touch of touches) {
+     // x-coordinate relative to the top-left
+     // corner of the canvas.
+     console.log(touch.x);
+   
+     // y-coordinate relative to the top-left
+     // corner of the canvas.
+     console.log(touch.y);
+   
+     // x-coordinate relative to the top-left
+     // corner of the browser.
+     console.log(touch.winX);
+   
+     // y-coordinate relative to the top-left
+     // corner of the browser.
+     console.log(touch.winY);
+   
+     // ID number
+     console.log(touch.id);
+   }
+   
    if(debug == 1){
       console.log(
          "Window.width: ", window.innerWidth,
