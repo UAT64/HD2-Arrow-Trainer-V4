@@ -3,38 +3,6 @@ var positionCount = 1
 var rowCount = 2
 var inputCount = 0
 var debug = 0
-
-const stratagems = [
-   Eagle500Kg = [1, 2, 3, 3, 3], EagleClusterBomb = [1, 2, 3, 3, 2], EagleAirstrike = [1, 2, 3, 2], EagleStrafingRun = [1, 2, 2], EagleNapalmAirstrike = [1, 2, 3, 1], EagleSmokeStrike = [1, 2, 1, 3], EagleRocketPods = [1, 2, 1, 4], EagleRearm = [1, 1, 4, 1, 2],
-   OrbitalPrecisionStrike = [2, 2, 1], OrbitalAirburstStrike = [2, 2, 2], Orbital120MMBarage = [2, 2, 3, 4, 2, 3], Orbital380MMBarage = [2, 3, 1, 1, 4, 3, 3], OrbitalWalkingBarage = [2, 3, 2, 3, 2, 3], OrbitalLaser = [2, 3, 1, 2, 3], OrbitalRailcannon = [2, 1, 3, 3, 2], OrbitalGasStrike = [2, 2, 3, 2], OrbitalSmokeStrike = [2, 2, 3, 1], OrbitalGattlingBarage = [2, 3, 4, 1, 1], OrbitalEMSStrike = [2, 2, 4, 3], OrbitalNapalmBarrage = [2, 2, 3, 4, 2, 1],
-   Reinforce = [1, 3, 2, 4, 1], SOSBeacon = [1, 3, 2, 1], Resupply = [3, 3, 1, 2], SEAFArtillery = [2, 1, 1, 3], Hellbomb = [3, 1, 4, 3, 1, 2, 3, 1], SuperSSD = [3, 3, 3, 1, 1], UploadData= [4, 2, 1, 1, 1], SeismicProbe = [1, 1, 4, 2, 3, 3], SuperEarthFlag = [3, 1, 3, 1],
-   LasGuardDog = [3, 1, 4, 1, 2, 2], GunGuardDog = [3, 1, 4, 1, 2, 3], GasGuardDog = [3, 1, 4, 1, 2, 1], JumpPack = [3, 1, 1, 3, 1], ShieldGenPack = [3, 1, 4, 2, 4, 2], SupplyPack = [3, 4, 3, 1, 1, 3], BallisticShield = [3, 4, 3, 3, 1, 4],
-   MachineGun = [3, 4, 3, 1, 2], AntiMaterialRifle = [3, 4, 2, 1, 3], Stalwart = [3, 4, 3, 1, 1, 4], ExpedableAntiTank = [3, 3, 4, 1, 2], RecoillessRifle = [3, 4, 2, 2, 4], Flamethrower = [3, 4, 1, 3, 1], Autocannon = [3, 4, 3, 1, 1, 2], HeavyMachineGun = [3, 4, 1, 3, 3], Railgun = [3, 2, 3, 1, 4, 2], Spear = [3, 3, 1, 3, 3], GrenadeLauncher = [3, 4, 3, 1, 4], LaserCannon = [3, 2, 3, 1, 4, 4], ArcThrower = [3, 2, 3, 1, 4, 4], QuasarCannon = [3, 3, 1, 4, 2], Airburst = [3, 1, 1, 4, 2], Commando = [3, 4, 1, 3, 2], Sterilizer = [3, 4, 1, 3, 4],
-   HMGEmplacement = [3, 1,4 , 2, 2, 4], ShieldGeneratorRelay = [3, 3, 4, 2, 4, 2], TeslaTower = [3, 1, 2, 1, 4, 2], APMinefield = [3, 4, 1, 2], IMinefield = [3, 4, 4, 3], ATMinefield = [3, 4, 1, 1], MachineGunSentry = [3, 1, 2, 2, 1], GatlingSentry = [3, 1, 2, 4], MortarSentry = [3, 1, 2, 2, 3], AutocannonSentry = [3, 1, 2, 1, 4, 1], RocketSentry = [3, 1, 2, 2, 4], EMSMortarSentry = [3, 1, 2, 3, 2],
-   PatriotExosuit = [4, 3, 2, 1, 4, 3, 3], EmancipatorExosuit = [4, 3, 2, 1, 4, 3, 1]
-]
-const stratagemNames = [
-   "Eagle 500Kg Bomb", "Eagle Cluster Bomb", "Eagle Airstrike", "Eagle Strafing Run", "Eagle Napalm Airstrike", "Eagle Smoke Strike", "Eagle 100MM Rocket Pods", "Eagle Rearm",
-   "Orbital Precision Strike", "Orbital Airburst Strike", "Orbital 120MM HE Barage", "Orbital 380MM HE Barage", "Orbital Walking Barage", "Orbital Laser", "Orbital Railcannon Strike", "Orbital Gas Strike", "Orbital Smoke Strike", "Orbital Gattling Barage", "Orbital EMS Strike", "Orbital Napalm Barrage",
-   "Reinforce", "SOS Beacon", "Resupply", "SEAF Artillery", "NUX-223 Hellbomb", "SSSD Delivery", "Upload Data", "Seismic Probe", "Super Earth Flag",
-   "AX/LAS-5 Guard Dog Rover", "AX/AR023 Guard Dog", "AX/TX-13 Guard Dog Breath", "LIFT-180 Jump Pack", "SH-32 Shield Generator Pack", "B-1 Supply Pack", "SH-20 Ballistic Shield Backpack",
-   "MG-43 Machine Gun", "APW-1 Anti-Materia Rifle", "M-105 Stalwart", "EAT-17 Expendable Anti-Tank", "GR-8 Recoilless Rifle", "FLAM-40 Flamethrower", "AC-8 Autocannon", "MG-206 Heavy Machine Gun", "RS-422 Railgun", "FAF-14 SPEAR Launcher", "GL-21 Grenade Launcher", "LAS-98 Laser Cannon", "ARC-3 Arc Thrower", "LAS-99 Quasar Cannon", "RL-77 Airburst Rocket Launcher", "MLS-4X Commando", "TX-41 Sterilizer",
-   "E/MG-101 HMG Emplacement", "FX-12 Shield Generator Relay", "A/ARC-3 Tesla Tower", "MD-6 Anti-Personnel Minefield", "MD-14 Inceniary Mines", "MD-17 Anti-Tank Mines", "A/MG-43 Machine Gun Sentry", "A/G-16 Gattling Sentry", "A/M-12 Mortar Sentry", "A/AC-8 Autocannon Sentry", "A/MLS-4X Rocket Sentry", "A/M-23 EMS Mortar Sentry",
-   "EXO-45 Patriot Exosuit", "EXO-49 Emancipator Exosuit"
-]
-const StratagemColours = [
-   0, 0, 0, 0, 0, 0, 0, 0,
-   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-   2, 2, 2, 2, 2, 2, 2, 2, 2,
-   3, 3, 3, 3, 3, 3, 3,
-   4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-   5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-   6, 6
-]
-var setLocations = [
-   0, 8, 20, 29, 36, 53, 65
-]
-
 var stratagemSelect
 var canvas
 let arrow, arrowFrame
@@ -54,7 +22,44 @@ var refresh, refreshImg
 var retryFrame, retryFrameImg
 var refreshFrame, refreshFrameImg
 var halted = true
+var upInput, rightInput, downInput, leftInput
+var upInput_img, rightInput_img, downInput_img, leftInput_img
+var upInputFrame, rightInputFrame, downInputFrame, leftInputFrame
+var upInputFrame_img, rightInputFrame_img, downInputFrame_img, leftInputFrame_img
 
+//all stratagems are declared here, stratagems[], stratagemNames[], stratagemColours[] and setLocations[] must all be in the same order.
+const stratagems = [
+   Eagle500Kg = [1, 2, 3, 3, 3], EagleClusterBomb = [1, 2, 3, 3, 2], EagleAirstrike = [1, 2, 3, 2], EagleStrafingRun = [1, 2, 2], EagleNapalmAirstrike = [1, 2, 3, 1], EagleSmokeStrike = [1, 2, 1, 3], EagleRocketPods = [1, 2, 1, 4], EagleRearm = [1, 1, 4, 1, 2],
+   OrbitalPrecisionStrike = [2, 2, 1], OrbitalAirburstStrike = [2, 2, 2], Orbital120MMBarage = [2, 2, 3, 4, 2, 3], Orbital380MMBarage = [2, 3, 1, 1, 4, 3, 3], OrbitalWalkingBarage = [2, 3, 2, 3, 2, 3], OrbitalLaser = [2, 3, 1, 2, 3], OrbitalRailcannon = [2, 1, 3, 3, 2], OrbitalGasStrike = [2, 2, 3, 2], OrbitalSmokeStrike = [2, 2, 3, 1], OrbitalGattlingBarage = [2, 3, 4, 1, 1], OrbitalEMSStrike = [2, 2, 4, 3], OrbitalNapalmBarrage = [2, 2, 3, 4, 2, 1],
+   Reinforce = [1, 3, 2, 4, 1], SOSBeacon = [1, 3, 2, 1], Resupply = [3, 3, 1, 2], SEAFArtillery = [2, 1, 1, 3], Hellbomb = [3, 1, 4, 3, 1, 2, 3, 1], SuperSSD = [3, 3, 3, 1, 1], UploadData= [4, 2, 1, 1, 1], SeismicProbe = [1, 1, 4, 2, 3, 3], SuperEarthFlag = [3, 1, 3, 1],
+   LasGuardDog = [3, 1, 4, 1, 2, 2], GunGuardDog = [3, 1, 4, 1, 2, 3], GasGuardDog = [3, 1, 4, 1, 2, 1], JumpPack = [3, 1, 1, 3, 1], ShieldGenPack = [3, 1, 4, 2, 4, 2], SupplyPack = [3, 4, 3, 1, 1, 3], BallisticShield = [3, 4, 3, 3, 1, 4],
+   MachineGun = [3, 4, 3, 1, 2], AntiMaterialRifle = [3, 4, 2, 1, 3], Stalwart = [3, 4, 3, 1, 1, 4], ExpedableAntiTank = [3, 3, 4, 1, 2], RecoillessRifle = [3, 4, 2, 2, 4], Flamethrower = [3, 4, 1, 3, 1], Autocannon = [3, 4, 3, 1, 1, 2], HeavyMachineGun = [3, 4, 1, 3, 3], Railgun = [3, 2, 3, 1, 4, 2], Spear = [3, 3, 1, 3, 3], GrenadeLauncher = [3, 4, 3, 1, 4], LaserCannon = [3, 2, 3, 1, 4, 4], ArcThrower = [3, 2, 3, 1, 4, 4], QuasarCannon = [3, 3, 1, 4, 2], Airburst = [3, 1, 1, 4, 2], Commando = [3, 4, 1, 3, 2], Sterilizer = [3, 4, 1, 3, 4],
+   HMGEmplacement = [3, 1,4 , 2, 2, 4], ShieldGeneratorRelay = [3, 3, 4, 2, 4, 2], TeslaTower = [3, 1, 2, 1, 4, 2], APMinefield = [3, 4, 1, 2], IMinefield = [3, 4, 4, 3], ATMinefield = [3, 4, 1, 1], MachineGunSentry = [3, 1, 2, 2, 1], GatlingSentry = [3, 1, 2, 4], MortarSentry = [3, 1, 2, 2, 3], AutocannonSentry = [3, 1, 2, 1, 4, 1], RocketSentry = [3, 1, 2, 2, 4], EMSMortarSentry = [3, 1, 2, 3, 2],
+   PatriotExosuit = [4, 3, 2, 1, 4, 3, 3], EmancipatorExosuit = [4, 3, 2, 1, 4, 3, 1]
+]
+const stratagemNames = [
+   "Eagle 500Kg Bomb", "Eagle Cluster Bomb", "Eagle Airstrike", "Eagle Strafing Run", "Eagle Napalm Airstrike", "Eagle Smoke Strike", "Eagle 100MM Rocket Pods", "Eagle Rearm",
+   "Orbital Precision Strike", "Orbital Airburst Strike", "Orbital 120MM HE Barage", "Orbital 380MM HE Barage", "Orbital Walking Barage", "Orbital Laser", "Orbital Railcannon Strike", "Orbital Gas Strike", "Orbital Smoke Strike", "Orbital Gattling Barage", "Orbital EMS Strike", "Orbital Napalm Barrage",
+   "Reinforce", "SOS Beacon", "Resupply", "SEAF Artillery", "NUX-223 Hellbomb", "SSSD Delivery", "Upload Data", "Seismic Probe", "Super Earth Flag",
+   "AX/LAS-5 Guard Dog Rover", "AX/AR023 Guard Dog", "AX/TX-13 Guard Dog Breath", "LIFT-180 Jump Pack", "SH-32 Shield Generator Pack", "B-1 Supply Pack", "SH-20 Ballistic Shield Backpack",
+   "MG-43 Machine Gun", "APW-1 Anti-Materia Rifle", "M-105 Stalwart", "EAT-17 Expendable Anti-Tank", "GR-8 Recoilless Rifle", "FLAM-40 Flamethrower", "AC-8 Autocannon", "MG-206 Heavy Machine Gun", "RS-422 Railgun", "FAF-14 SPEAR Launcher", "GL-21 Grenade Launcher", "LAS-98 Laser Cannon", "ARC-3 Arc Thrower", "LAS-99 Quasar Cannon", "RL-77 Airburst Rocket Launcher", "MLS-4X Commando", "TX-41 Sterilizer",
+   "E/MG-101 HMG Emplacement", "FX-12 Shield Generator Relay", "A/ARC-3 Tesla Tower", "MD-6 Anti-Personnel Minefield", "MD-14 Inceniary Mines", "MD-17 Anti-Tank Mines", "A/MG-43 Machine Gun Sentry", "A/G-16 Gattling Sentry", "A/M-12 Mortar Sentry", "A/AC-8 Autocannon Sentry", "A/MLS-4X Rocket Sentry", "A/M-23 EMS Mortar Sentry",
+   "EXO-45 Patriot Exosuit", "EXO-49 Emancipator Exosuit"
+]
+const stratagemColours = [
+   0, 0, 0, 0, 0, 0, 0, 0,
+   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+   2, 2, 2, 2, 2, 2, 2, 2, 2,
+   3, 3, 3, 3, 3, 3, 3,
+   4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+   5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+   6, 6
+]
+var setLocations = [
+   0, 8, 20, 29, 36, 53, 65
+]
+
+//loads all of the images that will be used before the canvas is drawn
 function preload(){
     arrowEmpty_img = loadAnimation("./assets/arrows/Arrow_empty.png","./assets/arrows/Arrow_filled.png", "./assets/arrows/Arrow_incorrect.png")
     arrowFrame_img = loadAnimation("./assets/arrows/Arrow_cover_eagle.png","./assets/arrows/Arrow_cover_orbital.png","./assets/arrows/Arrow_cover_support.png","./assets/arrows/Arrow_cover_backpack.png","./assets/arrows/Arrow_cover_weapon.png","./assets/arrows/Arrow_cover_sentry.png","./assets/arrows/Arrow_cover_vehicle.png")
@@ -72,9 +77,17 @@ function preload(){
     refreshImg = loadImage("./assets/icons/refresh.png")
     retryFrameImg = loadAnimation("./assets/icons/retryFrameEmpty.png", "./assets/icons/retryFrameHighlighted.png")
     refreshFrameImg = loadImage("./assets/icons/refreshFrame.png")
-   
+    upInput_img = loadAnimation("./assets/arrows/Arrow_empty.png","./assets/arrows/Arrow_filled.png")
+    rightInput_img = loadAnimation("./assets/arrows/Arrow_empty.png","./assets/arrows/Arrow_filled.png")
+    downInput_img = loadAnimation("./assets/arrows/Arrow_empty.png","./assets/arrows/Arrow_filled.png")
+    leftInput_img = loadAnimation("./assets/arrows/Arrow_empty.png","./assets/arrows/Arrow_filled.png")
+    upInputFrame_img = loadImage("./assets/arrows/Arrow_input_cover.png")
+    rightInputFrame_img = loadImage("./assets/arrows/Arrow_input_cover.png")
+    downInputFrame_img = loadImage("./assets/arrows/Arrow_input_cover.png")
+    leftInputFrame_img = loadImage("./assets/arrows/Arrow_input_cover.png")
 }
 
+//draws the initial canvas - does not run twice
 function setup(){
    canvas = createCanvas(window.innerWidth, window.innerHeight)
    widthCache = window.innerWidth
@@ -89,6 +102,7 @@ function setup(){
    comboSelect()
 }
 
+//to change the canvas size if the size of the window is changed -- kind of broken
 function updateCanvas(){
    canvas.clear()
    window.width = window.innerWidth
@@ -102,6 +116,7 @@ function updateCanvas(){
    background(rgb(69, 69, 69))
 }
 
+//selects a random stratagem - now not affected by the size of each stratagem type
 function comboSelect(){
    stratagemSelect = Math.floor(Math.random() * stratagems.length)
    for(var i = 0; i < stratagems[stratagemSelect].length; i++){
@@ -109,6 +124,7 @@ function comboSelect(){
    }
    drawing = true
 }
+
 
 function arrows(){
    if(debug == 1){
@@ -118,6 +134,7 @@ function arrows(){
    
    arrow = createSprite(positionCount * 100, rowCount * 100)
    arrowFrame = createSprite(positionCount * 100, rowCount * 100)
+   //pushes the arrow behind the frame to create a consistent look
    arrowFrame.depth = arrow.depth += 1
 
    arrow.x = positionCount * 100
@@ -130,7 +147,6 @@ function arrows(){
 
    arrow.visible = false
    arrow.scale = 0.12
-
    arrowFrame.visible = false
    arrowFrame.scale = 0.12
    rectMode(CENTER)
@@ -180,6 +196,7 @@ function arrows(){
    window.width = window.innerWidth
    window.height = window.innerHeight
 
+   //moves the arrows to the next row if they go off the side of the window
    if(arrow.x >= window.innerWidth - 100 || arrowFrame.x >= window.innerWidth - 100){
       arrow.x = 1
       arrowFrame.x = 1
@@ -191,6 +208,7 @@ function arrows(){
       arrowFrame.x = positionCount * 100
    }
 
+   //shrinks the arrows if they go off the bottom of the window
    if(arrow.y >= window.innerHeight - 100 || arrowFrame.y >= window.innerHeight - 100){
       rescale()
       updateCanvas()
@@ -208,7 +226,8 @@ function arrows(){
       )
    }
 
-   arrowFrame.setFrame(StratagemColours[stratagemSelect])
+   //each different colour is a different frame of an animation, required frame is declared in stratagemColours[]
+   arrowFrame.setFrame(stratagemColours[stratagemSelect])
    if(debug == 1){
       console.log(inputs)
    }
@@ -226,6 +245,7 @@ function arrows(){
       }
    }
 
+   //only displays the icons once the arrows are finished drawing
    if(count == stratagems[stratagemSelect].length - 1){
       icons()
    }
@@ -233,6 +253,7 @@ function arrows(){
    arrowGroup.add(arrow)
    arrowFrameGroup.add(arrowFrame)
 
+   //allows other functions to run once the arrows are finished, also makes arrows visible to prevent staggered appearance
    if(count == stratagems[stratagemSelect].length - 1){
       drawing = false
       halted = false
@@ -255,7 +276,9 @@ function arrowCheck(){
          correctValue ++
       }
    } else if(input != stratagems[stratagemSelect][inputCount][inputCount]){
-      console.log("Incorrect inputs");
+      if(debug == 1){
+         console.log("Incorrect inputs");
+      }
       arrowGroup.get(inputCount).setFrame(2)
       halted = true
       retryFrame.setFrame(1)
@@ -352,6 +375,58 @@ function icons(){
    icon.pause()
    icon.visible = false
    icon.scale = 1.8
+
+   upInputFrame = createSprite(200, 400)
+   upInputFrame.addImage("upInputImg", upInputFrame_img)
+   upInputFrame.rotation = 0
+   upInputFrame.visible = false
+   upInputFrame.scale = 0.12
+
+   rightInputFrame = createSprite(300, 500)
+   rightInputFrame.addImage("rightInputImg", rightInputFrame_img)
+   rightInputFrame.rotation = 90
+   rightInputFrame.visible = false
+   rightInputFrame.scale = 0.12
+
+   downInputFrame = createSprite(200, 600)
+   downInputFrame.addImage("downInputImg", downInputFrame_img)
+   downInputFrame.rotation = 180
+   downInputFrame.visible = false
+   downInputFrame.scale = 0.12
+
+   leftInputFrame = createSprite(100, 500)
+   leftInputFrame.addImage("leftInputImg", leftInputFrame_img)
+   leftInputFrame.rotation = 270
+   leftInputFrame.visible = false
+   leftInputFrame.scale = 0.12
+
+   upInput = createSprite(200, 400)
+   upInput.addAnimation("upInputImg", upInputFrame_img)
+   upInput.pause()
+   upInput.rotation = 0
+   upInput.visible = false
+   upInput.scale = 0.12
+
+   rightInput = createSprite(300, 500)
+   rightInput.addAnimation("rightInputImg", rightInputFrame_img)
+   rightInput.pause()
+   rightInput.rotation = 90
+   rightInput.visible = false
+   rightInput.scale = 0.12
+
+   downInput = createSprite(200, 600)
+   downInput.addAnimation("downInputImg", downInputFrame_img)
+   downInput.pause()
+   downInput.rotation = 180
+   downInput.visible = false
+   downInput.scale = 0.12
+
+   leftInput = createSprite(100, 500)
+   leftInput.addAnimation("leftInputImg", leftInputFrame_img)
+   leftInput.pause()
+   leftInput.rotation = 270
+   leftInput.visible = false
+   leftInput.scale = 0.12
    
    iconAnimationValue = stratagemSelect
    icon.setFrame(iconAnimationValue)
@@ -366,7 +441,7 @@ function icons(){
    refresh.visible = false   
    refresh.scale = 0.12
 
-   retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true
+   retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true, upInput.visible = true, upInputFrame.visible = true, rightInput.visible = true, rightInputFrame.visible = true, downInput.visible = true, downInputFrame.visible = true, leftInput.visible = true, leftInputFrame.visible = true
 }
 
 function draw(){
@@ -392,7 +467,6 @@ function draw(){
       debug -= 1
    }
    
-
    window.width = window.innerWidth
    window.height = window.innerHeight
 
@@ -433,7 +507,7 @@ function draw(){
       }
    }
 
-   if((keyWentDown(87) || keyWentDown(38)) & halted == false){
+   if(((keyWentDown(87) || keyWentDown(38)) || (mouseWentDown("leftButton") & mousePressedOver(upInput) || mouseWentDown("leftButton") & mousePressedOver(upInputFrame) ) ) & halted == false){
       input = 1
       if(debug == 1){
          console.log("up")
@@ -441,7 +515,7 @@ function draw(){
       arrowCheck()
    }
 
-   if((keyWentDown(83) || keyWentDown(40)) & halted == false){
+   if( ( (keyWentDown(83) || keyWentDown(40)) || (mouseWentDown("leftButton") & mousePressedOver(downInput) || mouseWentDown("leftButton") & mousePressedOver(downInputFrame) ) ) & halted == false ){
       input = 3
       if(debug == 1){
          console.log("down")
@@ -449,7 +523,7 @@ function draw(){
       arrowCheck()
    }
 
-   if((keyWentDown(65) || keyWentDown(37)) & halted == false){
+   if(((keyWentDown(65) || keyWentDown(37)) || (mouseWentDown("leftButton") & mousePressedOver(leftInput) || mouseWentDown("leftButton") & mousePressedOver(leftInputFrame) ) ) & halted == false){
       input = 4
       if(debug == 1){
          console.log("left")
@@ -457,7 +531,7 @@ function draw(){
       arrowCheck()
    }
 
-   if((keyWentDown(68) || keyWentDown(39)) & halted == false){
+   if(((keyWentDown(68) || keyWentDown(39)) || (mouseWentDown("leftButton") & mousePressedOver(rightInput) || mouseWentDown("leftButton") & mousePressedOver(rightInputFrame) ) ) & halted == false){
       input = 2  
       if(debug == 1){
          console.log("right")
