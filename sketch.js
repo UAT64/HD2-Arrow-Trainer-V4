@@ -23,9 +23,13 @@ var retryFrame, retryFrameImg
 var refreshFrame, refreshFrameImg
 var halted = true
 var upInput, rightInput, downInput, leftInput
+let upInput_button, rightInput_button, downInput_button, leftInput_button
 var upInput_img, rightInput_img, downInput_img, leftInput_img
 var upInputFrame, rightInputFrame, downInputFrame, leftInputFrame
 var upInputFrame_img, rightInputFrame_img, downInputFrame_img, leftInputFrame_img
+//let boxes = {};
+//document.addEventListener("touchstart", touchHandler);
+//document.addEventListener("touchmove", touchHandler);
 
 //all stratagems are declared here, stratagems[], stratagemNames[], stratagemColours[] and setLocations[] must all be in the same order.
 const stratagems = [
@@ -101,6 +105,15 @@ function setup(){
    arrowFrameGroup=new Group()
    comboSelect()
 }
+
+/*function touchHandler(e) {
+   if (e.touches) {
+     playerX = e.touches[0].pageX - canvas.offsetLeft - playerWidth / 2;
+     playerY = e.touches[0].pageY - canvas.offsetTop - playerHeight / 2;
+     output.textContent = `Touch:\nx: ${playerX}, y: ${playerY}`;
+     e.preventDefault();
+   }
+}*/
 
 //to change the canvas size if the size of the window is changed -- kind of broken
 function updateCanvas(){
@@ -376,6 +389,26 @@ function icons(){
    icon.visible = false
    icon.scale = 1.8
 
+   upInput_button = createButton('')
+   //upInput_button.hide()
+   upInput_button.position(150, 350)
+   upInput_button.size(100, 100)
+
+   rightInput_button = createButton('')
+   //rightInput_button.hide()
+   rightInput_button.position(250, 450)
+   rightInput_button.size(100, 100)
+
+   downInput_button = createButton('')
+   //downInput_button.hide()
+   downInput_button.position(150, 450)
+   downInput_button.size(100, 100)
+
+   leftInput_button = createButton('')
+   //leftInput_button.hide()
+   leftInput_button.position(50, 450)
+   leftInput_button.size(100, 100)
+
    upInputFrame = createSprite(200, 400)
    upInputFrame.addImage("upInputImg", upInputFrame_img)
    upInputFrame.rotation = 0
@@ -388,7 +421,7 @@ function icons(){
    rightInputFrame.visible = false
    rightInputFrame.scale = 0.12
 
-   downInputFrame = createSprite(200, 600)
+   downInputFrame = createSprite(200, 500)
    downInputFrame.addImage("downInputImg", downInputFrame_img)
    downInputFrame.rotation = 180
    downInputFrame.visible = false
@@ -414,7 +447,7 @@ function icons(){
    rightInput.visible = false
    rightInput.scale = 0.12
 
-   downInput = createSprite(200, 600)
+   downInput = createSprite(200, 500)
    downInput.addAnimation("downInputImg", downInputFrame_img)
    downInput.pause()
    downInput.rotation = 180
@@ -427,6 +460,8 @@ function icons(){
    leftInput.rotation = 270
    leftInput.visible = false
    leftInput.scale = 0.12
+
+
    
    iconAnimationValue = stratagemSelect
    icon.setFrame(iconAnimationValue)
@@ -444,29 +479,22 @@ function icons(){
    retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true, upInput.visible = true, upInputFrame.visible = true, rightInput.visible = true, rightInputFrame.visible = true, downInput.visible = true, downInputFrame.visible = true, leftInput.visible = true, leftInputFrame.visible = true
 }
 
+function touchStarted() {
+   // you can leave this empty
+}
+   
+
 function draw(){
 
    for (let touch of touches) {
-     // x-coordinate relative to the top-left
-     // corner of the canvas.
-     console.log(touch.x);
-   
-     // y-coordinate relative to the top-left
-     // corner of the canvas.
-     console.log(touch.y);
-   
-     // x-coordinate relative to the top-left
-     // corner of the browser.
-     console.log(touch.winX);
-   
-     // y-coordinate relative to the top-left
-     // corner of the browser.
-     console.log(touch.winY);
-   
-     // ID number
-     console.log(touch.id);
-   }
-   
+		if (touch.presses()) {
+			let box = new Sprite(touch.x, touch.y, 30, 30);
+			boxes[touch.id] = box;
+		} else {
+			boxes[touch.id].moveTowards(touch);
+		}
+	}
+
    if(debug == 1){
       console.log(
          "Window.width: ", window.innerWidth,
@@ -528,7 +556,8 @@ function draw(){
       }
    }
 
-   if(((keyWentDown(87) || keyWentDown(38)) || (mouseWentDown("leftButton") & mousePressedOver(upInput) || mouseWentDown("leftButton") & mousePressedOver(upInputFrame) ) ) & halted == false){
+
+   if(((keyWentDown(87) || keyWentDown(38)) || mousePressedOver(upInput_button)) & halted == false){
       input = 1
       if(debug == 1){
          console.log("up")
@@ -536,7 +565,7 @@ function draw(){
       arrowCheck()
    }
 
-   if( ( (keyWentDown(83) || keyWentDown(40)) || (mouseWentDown("leftButton") & mousePressedOver(downInput) || mouseWentDown("leftButton") & mousePressedOver(downInputFrame) ) ) & halted == false ){
+   if(((keyWentDown(83) || keyWentDown(40)) || mousePressedOver(downInput_button)) & halted == false ){
       input = 3
       if(debug == 1){
          console.log("down")
@@ -544,7 +573,7 @@ function draw(){
       arrowCheck()
    }
 
-   if(((keyWentDown(65) || keyWentDown(37)) || (mouseWentDown("leftButton") & mousePressedOver(leftInput) || mouseWentDown("leftButton") & mousePressedOver(leftInputFrame) ) ) & halted == false){
+   if(((keyWentDown(65) || keyWentDown(37)) || mousePressedOver(leftInput_button)) & halted == false){
       input = 4
       if(debug == 1){
          console.log("left")
@@ -552,7 +581,7 @@ function draw(){
       arrowCheck()
    }
 
-   if(((keyWentDown(68) || keyWentDown(39)) || (mouseWentDown("leftButton") & mousePressedOver(rightInput) || mouseWentDown("leftButton") & mousePressedOver(rightInputFrame) ) ) & halted == false){
+   if(((keyWentDown(68) || keyWentDown(39)) || mousePressedOver(rightInput_button)) & halted == false){
       input = 2  
       if(debug == 1){
          console.log("right")
