@@ -389,25 +389,29 @@ function icons(){
    icon.visible = false
    icon.scale = 1.8
 
-   upInput_button = createButton('')
+   /*upInput_button = createButton('')
    //upInput_button.hide()
    upInput_button.position(150, 350)
    upInput_button.size(100, 100)
+   upInput_button.debug = true
 
    rightInput_button = createButton('')
    //rightInput_button.hide()
    rightInput_button.position(250, 450)
    rightInput_button.size(100, 100)
+   rightInput_button.debug = true
 
    downInput_button = createButton('')
    //downInput_button.hide()
    downInput_button.position(150, 450)
    downInput_button.size(100, 100)
+   downInput_button.debug = true
 
    leftInput_button = createButton('')
    //leftInput_button.hide()
    leftInput_button.position(50, 450)
    leftInput_button.size(100, 100)
+   leftInput_button.debug = true*/
 
    upInputFrame = createSprite(200, 400)
    upInputFrame.addImage("upInputImg", upInputFrame_img)
@@ -479,21 +483,63 @@ function icons(){
    retryFrame.visible = true, retry.visible = true, refreshFrame.visible = true, refresh.visible = true , iconFrame.visible = true, icon.visible = true, upInput.visible = true, upInputFrame.visible = true, rightInput.visible = true, rightInputFrame.visible = true, downInput.visible = true, downInputFrame.visible = true, leftInput.visible = true, leftInputFrame.visible = true
 }
 
-function touchStarted() {
+/*function touchStarted() {
    // you can leave this empty
+}*/
+
+/*function mouseClicked() {
+   if(mouseIsOver(upInput_button)){
+      upInputFunction()
+   }
+   if(mouseIsOver(rightInput_button)){
+      rightInputFunction()
+   }
+   if(mouseIsOver(downInput_button)){
+      downInputFunction()
+   }
+   if(mouseIsOver(leftInput_button)){
+      leftInputFunction()
+   }
+}*/
+
+function upInputFunction(){
+   input = 1
+   if(debug == 1){
+      console.log("up")
+   }
+   arrowCheck()
 }
+
+function rightInputFunction(){
+   input = 2  
+   if(debug == 1){
+      console.log("right")
+   }
+   arrowCheck()
+}
+
+function downInputFunction(){
+   input = 3
+   if(debug == 1){
+      console.log("down")
+   }
+   arrowCheck()
+}
+
+function leftInputFunction(){
+   input = 4
+   if(debug == 1){
+      console.log("left")
+   }
+   arrowCheck()
+}
+
+
    
 
 function draw(){
 
-   for (let touch of touches) {
-		if (touch.presses()) {
-			let box = new Sprite(touch.x, touch.y, 30, 30);
-			boxes[touch.id] = box;
-		} else {
-			boxes[touch.id].moveTowards(touch);
-		}
-	}
+   
 
    if(debug == 1){
       console.log(
@@ -556,38 +602,41 @@ function draw(){
       }
    }
 
+   /*upInput_button.mouseClicked(upInputFunction())
+   rightInput_button.mouseClicked(rightInputFunction())
+   downInput_button.mouseClicked(downInputFunction())
+   leftInput_button.mouseClicked(leftInputFunction())*/
 
-   if(((keyWentDown(87) || keyWentDown(38)) || mousePressedOver(upInput_button)) & halted == false){
-      input = 1
-      if(debug == 1){
-         console.log("up")
-      }
-      arrowCheck()
+   /*if(mousePressedOver(upInput_button)){
+      upInputFunction()
+   }
+   if(mousePressedOver(rightInput_button)){
+      rightInputFunction()
+   }
+   if(mousePressedOver(downInput_button)){
+      downInputFunction()
+   }
+   if(mousePressedOver(leftInput_button)){
+      leftInputFunction()
+   }*/
+
+
+   if((keyWentDown(87) || keyWentDown(38) || upInputFrame.mouse.presses() || upInput.mouse.presses()) & halted == false){
+     upInputFunction()
    }
 
-   if(((keyWentDown(83) || keyWentDown(40)) || mousePressedOver(downInput_button)) & halted == false ){
-      input = 3
-      if(debug == 1){
-         console.log("down")
-      }
-      arrowCheck()
+   if((keyWentDown(68) || keyWentDown(39) || rightInputFrame.mouse.presses() || rightInput.mouse.presses()) & halted == false){
+      rightInputFunction()
    }
 
-   if(((keyWentDown(65) || keyWentDown(37)) || mousePressedOver(leftInput_button)) & halted == false){
-      input = 4
-      if(debug == 1){
-         console.log("left")
-      }
-      arrowCheck()
+   if((keyWentDown(83) || keyWentDown(40) || downInputFrame.mouse.presses() || downInput.mouse.presses()) & halted == false ){
+      downInputFunction()
    }
 
-   if(((keyWentDown(68) || keyWentDown(39)) || mousePressedOver(rightInput_button)) & halted == false){
-      input = 2  
-      if(debug == 1){
-         console.log("right")
-      }
-      arrowCheck()
+   if((keyWentDown(65) || keyWentDown(37) || leftInputFrame.mouse.presses() || leftInput.mouse.presses()) & halted == false){
+      leftInputFunction()
    }
+
 
    if(correctValue == stratagems[stratagemSelect].length ||  stratagems[stratagemSelect][inputCount] == 5 ){
       if(debug == 1){
