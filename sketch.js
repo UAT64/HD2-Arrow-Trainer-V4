@@ -23,7 +23,7 @@ var retryFrame, retryFrameImg
 var refreshFrame, refreshFrameImg
 var halted = true
 var upInput, rightInput, downInput, leftInput
-let upInput_button, rightInput_button, downInput_button, leftInput_button
+//let upInput_button, rightInput_button, downInput_button, leftInput_button
 var upInput_img, rightInput_img, downInput_img, leftInput_img
 var upInputFrame, rightInputFrame, downInputFrame, leftInputFrame
 var upInputFrame_img, rightInputFrame_img, downInputFrame_img, leftInputFrame_img
@@ -538,9 +538,7 @@ function leftInputFunction(){
    
 
 function draw(){
-
    
-
    if(debug == 1){
       console.log(
          "Window.width: ", window.innerWidth,
@@ -621,19 +619,19 @@ function draw(){
    }*/
 
 
-   if((keyWentDown(87) || keyWentDown(38) || upInputFrame.mouse.presses() || upInput.mouse.presses()) & halted == false){
+   if((keyWentDown(87) || keyWentDown(38) || (mousePressedOver(upInput) & mouseWentDown("leftButton")) || (mousePressedOver(upInputFrame) & mouseWentDown("leftButton"))) & halted == false){
      upInputFunction()
    }
 
-   if((keyWentDown(68) || keyWentDown(39) || rightInputFrame.mouse.presses() || rightInput.mouse.presses()) & halted == false){
+   if((keyWentDown(68) || keyWentDown(39) || (mousePressedOver(rightInput) & mouseWentDown("leftButton")) || (mousePressedOver(refreshFrame) & mouseWentDown("leftButton"))) & halted == false){
       rightInputFunction()
    }
 
-   if((keyWentDown(83) || keyWentDown(40) || downInputFrame.mouse.presses() || downInput.mouse.presses()) & halted == false ){
+   if((keyWentDown(83) || keyWentDown(40) || (mousePressedOver(downInput) & mouseWentDown("leftButton")) || (mousePressedOver(downInputFrame) & mouseWentDown("leftButton"))) & halted == false ){
       downInputFunction()
    }
 
-   if((keyWentDown(65) || keyWentDown(37) || leftInputFrame.mouse.presses() || leftInput.mouse.presses()) & halted == false){
+   if((keyWentDown(65) || keyWentDown(37) || (mousePressedOver(leftInput) & mouseWentDown("leftButton")) || (mousePressedOver(leftInputFrame) & mouseWentDown("leftButton"))) & halted == false){
       leftInputFunction()
    }
 
