@@ -581,6 +581,7 @@ function draw(){
       } else if(refresh.overlapPoint(touchX, touchY) || refreshFrame.overlapPoint(touchX, touchY)){
          refreshFunction()
       }
+      touches = []
    }
 
    if(correctValue == stratagems[stratagemSelect].length ||  stratagems[stratagemSelect][inputCount] == 5 ){
