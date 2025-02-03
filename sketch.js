@@ -535,8 +535,6 @@ function leftInputFunction(){
 }
 
 
-   
-
 function draw(){
    
    if(debug == 1){
@@ -618,20 +616,35 @@ function draw(){
       leftInputFunction()
    }*/
 
+   if (touches.length > 0) {
+        let touchX = touches[0].x;
+        let touchY = touches[0].y;
 
-   if((keyWentDown(87) || keyWentDown(38) || (mousePressedOver(upInput) & mouseWentDown("leftButton")) || (mousePressedOver(upInputFrame) & mouseWentDown("leftButton"))) & halted == false){
+        if (upInput.overlapPoint(touchX, touchY) || upInputFrame.overlapPoint(touchX, touchY)) {
+            upInputFunction();
+        } else if (rightInput.overlapPoint(touchX, touchY) || rightInputFrame.overlapPoint(touchX, touchY)) {
+            rightInputFunction();
+        } else if (downInput.overlapPoint(touchX, touchY) || downInputFrame.overlapPoint(touchX, touchY)) {
+            downInputFunction();
+        } else if (leftInput.overlapPoint(touchX, touchY) || leftInputFrame.overlapPoint(touchX, touchY)) {
+            leftInputFunction();
+        }
+   }
+
+
+   if((keyWentDown(87) || keyWentDown(38)/* || (mousePressedOver(upInput) & mouseWentDown("leftButton")) || (mousePressedOver(upInputFrame) & mouseWentDown("leftButton"))*/) & halted == false){
      upInputFunction()
    }
 
-   if((keyWentDown(68) || keyWentDown(39) || (mousePressedOver(rightInput) & mouseWentDown("leftButton")) || (mousePressedOver(refreshFrame) & mouseWentDown("leftButton"))) & halted == false){
+   if((keyWentDown(68) || keyWentDown(39)/* || (mousePressedOver(rightInput) & mouseWentDown("leftButton")) || (mousePressedOver(refreshFrame) & mouseWentDown("leftButton"))*/) & halted == false){
       rightInputFunction()
    }
 
-   if((keyWentDown(83) || keyWentDown(40) || (mousePressedOver(downInput) & mouseWentDown("leftButton")) || (mousePressedOver(downInputFrame) & mouseWentDown("leftButton"))) & halted == false ){
+   if((keyWentDown(83) || keyWentDown(40)/* || (mousePressedOver(downInput) & mouseWentDown("leftButton")) || (mousePressedOver(downInputFrame) & mouseWentDown("leftButton"))*/) & halted == false ){
       downInputFunction()
    }
 
-   if((keyWentDown(65) || keyWentDown(37) || (mousePressedOver(leftInput) & mouseWentDown("leftButton")) || (mousePressedOver(leftInputFrame) & mouseWentDown("leftButton"))) & halted == false){
+   if((keyWentDown(65) || keyWentDown(37)/* || (mousePressedOver(leftInput) & mouseWentDown("leftButton")) || (mousePressedOver(leftInputFrame) & mouseWentDown("leftButton"))*/) & halted == false){
       leftInputFunction()
    }
 
